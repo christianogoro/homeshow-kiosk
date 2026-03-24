@@ -1037,7 +1037,7 @@ function updateSyncUI(state) {
   badge.classList.remove('visible');
 
   if (state === 'synced') {
-    dot.classList.add(''); // green default
+    // green is the default (no extra class needed)
     label.textContent = 'Synced';
   } else if (state === 'syncing') {
     dot.classList.add('syncing');
