@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<title>Bumble Bee Blinds — Home Show</title>
+<style>
+  :root {
+    --buttercup: #f0a616;
+    --coffee: #24150e;
+    --gin-fizz: #fff9e5;
+    --chino: #cbc1a0;
+    --success: #4caf50;
+    --error: #e53935;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: var(--gin-fizz);
+    color: var(--coffee);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── Header ── */
+  .header {
+    background: var(--coffee);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header h1 {
+    color: var(--buttercup);
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .header .bee-icon { height: 36px; width: auto; }
+  .lead-count {
+    background: var(--buttercup);
+    color: var(--coffee);
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 14px;
+  }
+
+  /* ── Admin Bar ── */
+  .admin-bar {
+    background: var(--coffee);
+    padding: 8px 24px 12px;
+    display: none;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .admin-bar.visible { display: flex; }
+  .admin-btn {
+    background: var(--buttercup);
+    color: var(--coffee);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .admin-btn:active { opacity: 0.8; }
+  .admin-btn.danger { background: var(--error); color: #fff; }
+  .admin-input {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid var(--chino);
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    flex: 1;
+    min-width: 200px;
+  }
+  .admin-input::placeholder { color: var(--chino); }
+  .admin-status {
+    color: var(--buttercup);
+    font-size: 13px;
+    width: 100%;
+    margin-top: 4px;
+  }
+
+  /* ── Container ── */
+  .container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 16px 24px 20px;
+  }
+
+  /* ── Progress Bar ── */
+  .progress {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin-bottom: 16px;
+  }
+  .step-dot {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--chino);
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700;
+    font-size: 16px;
+    transition: all 0.3s;
+  }
+  .step-dot.active { background: var(--buttercup); color: var(--coffee); transform: scale(1.15); }
+  .step-dot.done { background: var(--success); }
+  .step-line {
+    width: 60px; height: 3px;
+    background: var(--chino);
+    transition: background 0.3s;
+  }
+  .step-line.done { background: var(--success); }
+
+  /* ── Screens ── */
+  .screen { display: none; animation: fadeIn 0.3s ease; }
+  .screen.active { display: flex; flex-direction: column; min-height: calc(100dvh - 92px); }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+  .screen-title {
+    font-size: 34px;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 4px;
+  }
+  .screen-sub {
+    text-align: center;
+    color: #7a6e5f;
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+
+  /* ── Form Fields ── */
+  .field { margin-bottom: 10px; }
+  .field label {
+    display: block;
+    font-weight: 600;
+    font-size: 18px;
+    margin-bottom: 4px;
+    color: var(--coffee);
+  }
+  .field input, .field select {
+    width: 100%;
+    padding: 14px 18px;
+    border: 2px solid var(--chino);
+    border-radius: 14px;
+    font-size: 20px;
+    background: #fff;
+    color: var(--coffee);
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+    font-family: inherit;
+  }
+  .field input:focus, .field select:focus {
+    outline: none;
+    border-color: var(--buttercup);
+  }
+  .field input.error, .field select.error {
+    border-color: var(--error);
+  }
+
+  /* ── Address Type Toggle ── */
+  .addr-toggle {
+    display: flex;
+    gap: 0;
+    margin-bottom: 8px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 2px solid var(--chino);
+  }
+  .addr-toggle button {
+    flex: 1;
+    padding: 10px 8px;
+    border: none;
+    background: #fff;
+    color: var(--coffee);
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .addr-toggle button.active {
+    background: var(--buttercup);
+    color: var(--coffee);
+  }
+  .addr-toggle button:active { opacity: 0.8; }
+  .error-msg {
+    color: var(--error);
+    font-size: 12px;
+    margin-top: 4px;
+    display: none;
+  }
+
+  /* ── Product Grid ── */
+  .product-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 16px;
+    flex: 1;
+  }
+  .product-card {
+    background: #fff;
+    border: 2px solid var(--chino);
+    border-radius: 16px;
+    padding: 14px 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .product-card.selected {
+    border-color: var(--buttercup);
+    background: #fef7e0;
+    box-shadow: 0 0 0 2px var(--buttercup);
+  }
+  .product-card:active { transform: scale(0.97); }
+  .product-icon { margin-bottom: 6px; color: var(--coffee); }
+  .product-icon svg { width: 42px; height: 42px; }
+  .product-card.selected .product-icon { color: var(--buttercup); }
+  .product-name { font-weight: 700; font-size: 17px; line-height: 1.2; }
+  .product-desc { font-size: 13px; color: #7a6e5f; margin-top: 4px; }
+
+  /* ── Buttons ── */
+  .btn-primary {
+    width: 100%;
+    padding: 16px;
+    background: var(--buttercup);
+    color: var(--coffee);
+    border: none;
+    border-radius: 16px;
+    font-size: 22px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.3px;
+  }
+  .btn-primary:active { transform: scale(0.98); opacity: 0.9; }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .btn-secondary {
+    width: 100%;
+    padding: 14px;
+    background: transparent;
+    color: var(--coffee);
+    border: 2px solid var(--chino);
+    border-radius: 16px;
+    font-size: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+
+  /* ── Thank You Screen ── */
+  .promo-box {
+    background: var(--coffee);
+    border-radius: 18px;
+    padding: 28px 24px;
+    text-align: center;
+    margin: 16px 0;
+  }
+  .promo-label {
+    color: var(--buttercup);
+    font-size: 18px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+  .promo-code {
+    color: #fff;
+    font-size: 52px;
+    font-weight: 800;
+    letter-spacing: 4px;
+    margin: 12px 0;
+  }
+  .promo-detail {
+    color: var(--chino);
+    font-size: 18px;
+    line-height: 1.5;
+  }
+
+  .checkmark {
+    width: 80px; height: 80px;
+    margin: 0 auto 16px;
+    background: var(--success);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 40px;
+    color: #fff;
+    animation: pop 0.4s ease;
+  }
+  @keyframes pop { 0% { transform: scale(0); } 60% { transform: scale(1.2); } 100% { transform: scale(1); } }
+
+  .thankyou-text {
+    text-align: center;
+    font-size: 20px;
+    color: #7a6e5f;
+    line-height: 1.5;
+    margin-bottom: 16px;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ── Welcome Screen ── */
+  .welcome-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: calc(100dvh - 60px);
+    text-align: center;
+    padding: 20px 24px;
+  }
+  .welcome-logo { max-width: 340px; width: 60%; margin-bottom: 20px; }
+  .welcome-bee { width: 100px; margin-bottom: 12px; }
+  .welcome-title {
+    font-size: 42px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    color: var(--coffee);
+  }
+  .welcome-sub {
+    font-size: 24px;
+    color: #7a6e5f;
+    margin-bottom: 32px;
+    line-height: 1.4;
+  }
+  .welcome-cta {
+    padding: 24px 80px;
+    font-size: 28px;
+    border-radius: 20px;
+  }
+
+  /* ── Responsive: Small phones (iPhone SE, etc) ── */
+  @media (max-height: 600px) {
+    .welcome-logo { max-width: 180px; margin-bottom: 10px; }
+    .welcome-title { font-size: 28px; }
+    .welcome-sub { font-size: 16px; margin-bottom: 16px; }
+    .welcome-cta { padding: 14px 50px; font-size: 20px; }
+    .screen-title { font-size: 24px; }
+    .screen-sub { font-size: 14px; margin-bottom: 8px; }
+    .field { margin-bottom: 6px; }
+    .field label { font-size: 14px; margin-bottom: 2px; }
+    .field input { padding: 10px 14px; font-size: 16px; }
+    .progress { margin-bottom: 8px; }
+    .step-dot { width: 28px; height: 28px; font-size: 13px; }
+    .step-line { width: 40px; }
+    .product-card { padding: 10px 8px; }
+    .product-icon svg { width: 28px; height: 28px; }
+    .product-name { font-size: 13px; }
+    .product-desc { font-size: 10px; }
+    .product-grid { gap: 6px; margin-bottom: 8px; }
+    .btn-primary { padding: 12px; font-size: 18px; }
+    .btn-secondary { padding: 10px; font-size: 16px; }
+    .promo-box { padding: 16px; margin: 8px 0; }
+    .promo-label { font-size: 12px; }
+    .promo-code { font-size: 36px; }
+    .promo-detail { font-size: 13px; }
+    .thankyou-text { font-size: 14px; }
+    .welcome-bee { width: 60px; }
+    .container { padding: 8px 16px 12px; }
+  }
+
+  /* ── Responsive: Standard tablets / iPad Mini (768px height) ── */
+  @media (min-height: 601px) and (max-height: 850px) {
+    .welcome-logo { max-width: 260px; margin-bottom: 14px; }
+    .welcome-title { font-size: 34px; }
+    .welcome-sub { font-size: 20px; margin-bottom: 24px; }
+    .welcome-cta { padding: 18px 60px; font-size: 24px; }
+    .field input { padding: 12px 16px; font-size: 18px; }
+    .field label { font-size: 16px; }
+    .product-icon svg { width: 34px; height: 34px; }
+    .product-name { font-size: 15px; }
+    .product-desc { font-size: 12px; }
+    .promo-code { font-size: 44px; }
+    .welcome-bee { width: 80px; }
+  }
+
+  /* ── Responsive: iPad Air / Pro / large tablets (851-1100px) ── */
+  /* Uses the base styles above — already tuned for this range */
+
+  /* ── Responsive: Large laptop screens (1100px+) ── */
+  @media (min-height: 1100px) {
+    .welcome-logo { max-width: 420px; margin-bottom: 32px; }
+    .welcome-title { font-size: 52px; }
+    .welcome-sub { font-size: 28px; margin-bottom: 48px; }
+    .welcome-cta { padding: 28px 100px; font-size: 32px; }
+    .screen-title { font-size: 42px; }
+    .screen-sub { font-size: 24px; margin-bottom: 24px; }
+    .field { margin-bottom: 16px; }
+    .field label { font-size: 22px; margin-bottom: 8px; }
+    .field input { padding: 20px 22px; font-size: 24px; }
+    .product-card { padding: 24px 16px; }
+    .product-icon svg { width: 56px; height: 56px; }
+    .product-name { font-size: 22px; }
+    .product-desc { font-size: 16px; }
+    .product-grid { gap: 16px; }
+    .btn-primary { padding: 22px; font-size: 26px; }
+    .btn-secondary { padding: 18px; font-size: 22px; }
+    .promo-box { padding: 40px 32px; }
+    .promo-label { font-size: 22px; }
+    .promo-code { font-size: 64px; }
+    .promo-detail { font-size: 22px; }
+    .thankyou-text { font-size: 24px; }
+    .welcome-bee { width: 120px; }
+    .container { max-width: 800px; padding: 24px 32px 28px; }
+    .progress { margin-bottom: 24px; }
+    .step-dot { width: 44px; height: 44px; font-size: 20px; }
+    .step-line { width: 80px; height: 4px; }
+  }
+
+  /* ── Toast ── */
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--coffee);
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    z-index: 200;
+    transition: transform 0.3s ease;
+    white-space: nowrap;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* ── Google Sheets Config Modal ── */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 300;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-overlay.visible { display: flex; }
+  .modal {
+    background: #fff;
+    border-radius: 18px;
+    padding: 32px 24px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+  .modal h2 { font-size: 20px; margin-bottom: 16px; }
+  .modal p { font-size: 14px; color: #7a6e5f; margin-bottom: 16px; line-height: 1.5; }
+  .modal input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid var(--chino);
+    border-radius: 10px;
+    font-size: 15px;
+    margin-bottom: 12px;
+  }
+  .modal input:focus { outline: none; border-color: var(--buttercup); }
+  .modal-btns { display: flex; gap: 10px; margin-top: 8px; }
+  .modal-btns button { flex: 1; padding: 12px; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; }
+  .modal-btns .cancel { background: #eee; border: none; color: var(--coffee); }
+  .modal-btns .save { background: var(--buttercup); border: none; color: var(--coffee); }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <div style="display:flex;align-items:center;gap:10px;">
+    <img src="bee-icon.png" class="bee-icon" alt="Bumble Bee Blinds">
+    <h1>BUMBLE BEE BLINDS</h1>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <span class="lead-count" id="leadCount">0 leads</span>
+    <button onclick="toggleAdmin()" style="background:none;border:none;color:var(--chino);font-size:20px;cursor:pointer;">&#9881;</button>
+  </div>
+</div>
+
+<!-- Admin Bar -->
+<div class="admin-bar" id="adminBar">
+  <button class="admin-btn" onclick="downloadCSV()">&#128229; Download CSV</button>
+  <button class="admin-btn" onclick="showSheetsModal()">&#128214; Google Sheets</button>
+  <button class="admin-btn" onclick="editPromoCode()">&#127915; Edit Promo</button>
+  <button class="admin-btn danger" onclick="confirmClear()">&#128465; Clear All</button>
+  <div class="admin-status" id="adminStatus"></div>
+</div>
+
+<!-- Main Content -->
+<div class="container">
+
+  <!-- SCREEN 0: Welcome / Attract -->
+  <div class="screen active" id="screen-welcome">
+    <div class="welcome-screen">
+      <img src="logo-stacked.png" class="welcome-logo" alt="Bumble Bee Blinds">
+      <div class="welcome-title">Welcome!</div>
+      <div class="welcome-sub">
+        Tampa Bay's window treatment experts.<br>
+        Sign up for an exclusive show special!
+      </div>
+      <button class="btn-primary welcome-cta" onclick="startForm()">Get Started</button>
+    </div>
+  </div>
+
+  <!-- SCREEN 1: Contact Info -->
+  <div class="screen" id="screen-contact">
+    <div class="progress">
+      <div class="step-dot active" id="dot1">1</div>
+      <div class="step-line" id="line1"></div>
+      <div class="step-dot" id="dot2">2</div>
+      <div class="step-line" id="line2"></div>
+      <div class="step-dot" id="dot3">3</div>
+      <div class="step-line"></div>
+      <div class="step-dot">4</div>
+    </div>
+
+    <div class="screen-title">Tell Us About You</div>
+    <div class="screen-sub">We'll reach out with your personalized quote</div>
+
+    <div class="field">
+      <label for="fname">First Name *</label>
+      <input type="text" id="fname" placeholder="First name" autocomplete="given-name" autocapitalize="words">
+      <div class="error-msg" id="fname-error">Please enter your first name</div>
+    </div>
+    <div class="field">
+      <label for="lname">Last Name *</label>
+      <input type="text" id="lname" placeholder="Last name" autocomplete="family-name" autocapitalize="words">
+      <div class="error-msg" id="lname-error">Please enter your last name</div>
+    </div>
+    <div class="field">
+      <label for="email">Email *</label>
+      <input type="email" id="email" placeholder="you@email.com" autocomplete="email" inputmode="email">
+      <div class="error-msg" id="email-error">Please enter a valid email (e.g. name@email.com)</div>
+    </div>
+    <div class="field">
+      <label for="phone">Phone *</label>
+      <input type="tel" id="phone" placeholder="(813) 555-1234" autocomplete="tel" inputmode="tel">
+      <div class="error-msg" id="phone-error">Please enter a valid 10-digit phone number</div>
+    </div>
+    <div class="field">
+      <label>Location</label>
+      <div class="addr-toggle" id="addrToggle">
+        <button class="active" onclick="setAddrMode('zip')">Zip Code</button>
+        <button onclick="setAddrMode('full')">Full Address</button>
+      </div>
+      <input type="text" id="address" placeholder="33602" autocomplete="postal-code" inputmode="numeric" maxlength="5">
+      <div class="error-msg" id="address-error">Please enter a valid 5-digit zip code</div>
+    </div>
+
+    <button class="btn-primary" onclick="goToProducts()">Next &rarr;</button>
+  </div>
+
+  <!-- SCREEN 2: Product Interest -->
+  <div class="screen" id="screen-products">
+    <div class="progress">
+      <div class="step-dot done" id="dot1b">&#10003;</div>
+      <div class="step-line done" id="line1b"></div>
+      <div class="step-dot active" id="dot2b">2</div>
+      <div class="step-line" id="line2b"></div>
+      <div class="step-dot" id="dot3b">3</div>
+      <div class="step-line"></div>
+      <div class="step-dot">4</div>
+    </div>
+
+    <div class="screen-title">What Interests You?</div>
+    <div class="screen-sub">Tap all that apply</div>
+
+    <div class="product-grid">
+      <div class="product-card" onclick="toggleProduct(this)" data-product="Shutters">
+        <div class="product-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="6" y="4" width="36" height="40" rx="2"/><line x1="10" y1="12" x2="38" y2="12"/><line x1="10" y1="20" x2="38" y2="20"/><line x1="10" y1="28" x2="38" y2="28"/><line x1="10" y1="36" x2="38" y2="36"/><line x1="24" y1="4" x2="24" y2="44"/></svg></div>
+        <div class="product-name">Shutters</div>
+        <div class="product-desc">Plantation & composite</div>
+      </div>
+      <div class="product-card" onclick="toggleProduct(this)" data-product="Cellular Shades">
+        <div class="product-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="6" y="2" width="36" height="6" rx="1"/><path d="M10 14 L18 8 L26 14 L34 8 L38 11"/><path d="M10 14 L18 20 L26 14 L34 20 L38 17"/><path d="M10 22 L18 28 L26 22 L34 28 L38 25"/><path d="M10 22 L18 16 L26 22 L34 16 L38 19"/><path d="M10 30 L18 36 L26 30 L34 36 L38 33"/><path d="M10 30 L18 24 L26 30 L34 24 L38 27"/><line x1="10" y1="8" x2="10" y2="36"/><line x1="38" y1="8" x2="38" y2="36"/></svg></div>
+        <div class="product-name">Cellular Shades</div>
+        <div class="product-desc">Honeycomb insulation</div>
+      </div>
+      <div class="product-card" onclick="toggleProduct(this)" data-product="Roller Shades">
+        <div class="product-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="8" y="4" width="32" height="8" rx="4"/><rect x="10" y="12" width="28" height="28" rx="1"/><line x1="22" y1="40" x2="26" y2="40"/><circle cx="24" cy="43" r="2"/></svg></div>
+        <div class="product-name">Roller Shades</div>
+        <div class="product-desc">Solar, blackout & more</div>
+      </div>
+      <div class="product-card" onclick="toggleProduct(this)" data-product="Roman Shades">
+        <div class="product-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="6" y="2" width="36" height="6" rx="1"/><line x1="6" y1="8" x2="6" y2="44"/><line x1="42" y1="8" x2="42" y2="44"/><path d="M6 18 Q24 14 42 18"/><path d="M6 28 Q24 24 42 28"/><path d="M6 38 Q24 32 42 38"/><line x1="6" y1="44" x2="42" y2="44"/></svg></div>
+        <div class="product-name">Roman Shades</div>
+        <div class="product-desc">Elegant fabric folds</div>
+      </div>
+      <div class="product-card" onclick="toggleProduct(this)" data-product="Drapery">
+        <div class="product-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="4" y1="4" x2="44" y2="4"/><path d="M8 4 Q6 24 10 44"/><path d="M16 4 Q12 20 14 44"/><path d="M8 4 Q12 16 16 4"/><path d="M32 4 Q36 20 34 44"/><path d="M40 4 Q42 24 38 44"/><path d="M32 4 Q36 16 40 4"/><circle cx="8" cy="4" r="2" fill="currentColor"/><circle cx="16" cy="4" r="2" fill="currentColor"/><circle cx="32" cy="4" r="2" fill="currentColor"/><circle cx="40" cy="4" r="2" fill="currentColor"/></svg></div>
+        <div class="product-name">Drapery</div>
+        <div class="product-desc">Custom drapes & curtains</div>
+      </div>
+      <div class="product-card" onclick="toggleProduct(this)" data-product="Outdoor Shades">
+        <div class="product-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="38" cy="10" r="5"/><line x1="38" y1="2" x2="38" y2="4"/><line x1="38" y1="16" x2="38" y2="18"/><line x1="30" y1="10" x2="32" y2="10"/><line x1="44" y1="10" x2="46" y2="10"/><rect x="4" y="6" width="28" height="4" rx="1"/><rect x="6" y="10" width="24" height="32" rx="1"/><line x1="6" y1="18" x2="30" y2="18"/><line x1="6" y1="26" x2="30" y2="26"/><line x1="6" y1="34" x2="30" y2="34"/></svg></div>
+        <div class="product-name">Outdoor Shades</div>
+        <div class="product-desc">Lanai & patio solutions</div>
+      </div>
+      <div class="product-card" onclick="toggleProduct(this)" data-product="Motorization">
+        <div class="product-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="12" y="6" width="24" height="36" rx="4"/><line x1="20" y1="6" x2="28" y2="6"/><circle cx="24" cy="36" r="2"/><path d="M20 20 L24 16 L28 20"/><path d="M20 26 L24 22 L28 26"/><path d="M6 16 Q2 24 6 32"/><path d="M42 16 Q46 24 42 32"/></svg></div>
+        <div class="product-name">Motorization</div>
+        <div class="product-desc">Smart home & voice control</div>
+      </div>
+      <div class="product-card" onclick="toggleProduct(this)" data-product="Sheer Shades">
+        <div class="product-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="8" y="4" width="32" height="6" rx="2"/><rect x="10" y="10" width="28" height="32" rx="1" stroke-dasharray="4 3"/><line x1="10" y1="18" x2="38" y2="18" stroke-dasharray="4 3"/><line x1="10" y1="26" x2="38" y2="26" stroke-dasharray="4 3"/><line x1="10" y1="34" x2="38" y2="34" stroke-dasharray="4 3"/></svg></div>
+        <div class="product-name">Sheer Shades</div>
+        <div class="product-desc">Light filtering views</div>
+      </div>
+      <div class="product-card" onclick="toggleProduct(this)" data-product="Banded Shades">
+        <div class="product-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="8" y="4" width="32" height="6" rx="2"/><line x1="8" y1="10" x2="8" y2="42"/><line x1="40" y1="10" x2="40" y2="42"/><rect x="10" y="12" width="28" height="6" rx="1"/><rect x="10" y="22" width="28" height="6" rx="1"/><rect x="10" y="32" width="28" height="6" rx="1"/></svg></div>
+        <div class="product-name">Banded Shades</div>
+        <div class="product-desc">Dual-layer light control</div>
+      </div>
+      <div class="product-card" onclick="toggleProduct(this)" data-product="Smart Drapes">
+        <div class="product-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="4" y1="4" x2="44" y2="4"/><path d="M8 4 Q10 24 12 44"/><path d="M20 4 Q18 20 20 44"/><path d="M28 4 Q30 20 28 44"/><path d="M40 4 Q38 24 36 44"/><path d="M32 14 Q36 10 40 14"/><path d="M32 10 Q36 6 40 10"/></svg></div>
+        <div class="product-name">Smart Drapes</div>
+        <div class="product-desc">Motorized curtains</div>
+      </div>
+      <div class="product-card" onclick="toggleProduct(this)" data-product="Natural Woven Shades">
+        <div class="product-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="8" y="4" width="32" height="6" rx="2"/><path d="M10 14 H38 M10 20 H38 M10 26 H38 M10 32 H38 M10 38 H38"/><path d="M14 10 V42 M22 10 V42 M30 10 V42 M38 10 V42"/></svg></div>
+        <div class="product-name">Natural Woven</div>
+        <div class="product-desc">Bamboo & organic textures</div>
+      </div>
+      <div class="product-card" onclick="toggleProduct(this)" data-product="Not Sure - Need Help">
+        <div class="product-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="24" cy="24" r="18"/><path d="M18 18 Q18 12 24 12 Q30 12 30 18 Q30 22 24 24 L24 28"/><circle cx="24" cy="34" r="2" fill="currentColor"/></svg></div>
+        <div class="product-name">Not Sure Yet</div>
+        <div class="product-desc">I'd like expert guidance</div>
+      </div>
+    </div>
+
+    <button class="btn-primary" onclick="goToTimeline()">Next &rarr;</button>
+    <button class="btn-secondary" onclick="goBack()">&#8592; Back</button>
+  </div>
+
+  <!-- SCREEN 3: Timeline -->
+  <div class="screen" id="screen-timeline">
+    <div class="progress">
+      <div class="step-dot done">&#10003;</div>
+      <div class="step-line done"></div>
+      <div class="step-dot done">&#10003;</div>
+      <div class="step-line done"></div>
+      <div class="step-dot active">3</div>
+      <div class="step-line"></div>
+      <div class="step-dot">4</div>
+    </div>
+
+    <div class="screen-title">What's Your Timeline?</div>
+    <div class="screen-sub">When are you looking to get started?</div>
+
+    <div class="product-grid" id="timelineGrid" style="grid-template-columns: 1fr 1fr;">
+      <div class="product-card" onclick="selectTimeline(this)" data-timeline="Right Away">
+        <div class="product-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="24" cy="24" r="18"/><polyline points="24,12 24,24 32,28"/></svg></div>
+        <div class="product-name">Right Away</div>
+      </div>
+      <div class="product-card" onclick="selectTimeline(this)" data-timeline="Within 1 Month">
+        <div class="product-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="8" y="8" width="32" height="32" rx="3"/><line x1="8" y1="16" x2="40" y2="16"/><line x1="16" y1="8" x2="16" y2="12"/><line x1="32" y1="8" x2="32" y2="12"/><circle cx="20" cy="26" r="3" fill="currentColor" stroke="none"/></svg></div>
+        <div class="product-name">Within 1 Month</div>
+      </div>
+      <div class="product-card" onclick="selectTimeline(this)" data-timeline="1-3 Months">
+        <div class="product-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="8" y="8" width="32" height="32" rx="3"/><line x1="8" y1="16" x2="40" y2="16"/><line x1="16" y1="8" x2="16" y2="12"/><line x1="32" y1="8" x2="32" y2="12"/><circle cx="28" cy="30" r="3" fill="currentColor" stroke="none"/></svg></div>
+        <div class="product-name">1 - 3 Months</div>
+      </div>
+      <div class="product-card" onclick="selectTimeline(this, true)" data-timeline="Other">
+        <div class="product-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M8 36 L24 12 L40 36 Z"/><line x1="24" y1="22" x2="24" y2="28"/><circle cx="24" cy="32" r="1.5" fill="currentColor"/></svg></div>
+        <div class="product-name">Other</div>
+      </div>
+    </div>
+
+    <div class="field" id="otherTimelineField" style="display:none;">
+      <label for="otherTimeline">Tell us your timeline</label>
+      <input type="text" id="otherTimeline" placeholder="e.g. June 2026, End of April, 6 months">
+    </div>
+
+    <button class="btn-primary" onclick="submitLead()" id="btnSubmitLead" disabled>Submit &rarr;</button>
+    <button class="btn-secondary" onclick="showScreen('products')">&#8592; Back</button>
+  </div>
+
+  <!-- SCREEN 4: Thank You + Promo -->
+  <div class="screen" id="screen-thanks">
+    <div class="progress">
+      <div class="step-dot done">&#10003;</div>
+      <div class="step-line done"></div>
+      <div class="step-dot done">&#10003;</div>
+      <div class="step-line done"></div>
+      <div class="step-dot done">&#10003;</div>
+      <div class="step-line done"></div>
+      <div class="step-dot done">&#10003;</div>
+    </div>
+
+    <div style="text-align:center;margin-bottom:12px;"><img src="bee-icon.png" class="welcome-bee" alt=""></div>
+    <div class="screen-title">You're All Set!</div>
+
+    <div class="promo-box">
+      <div class="promo-label">Your Exclusive Show Special</div>
+      <div class="promo-code" id="promoDisplay">BB185</div>
+      <div class="promo-detail">
+        Mention this code when you schedule<br>
+        your FREE in-home consultation!
+      </div>
+    </div>
+
+    <div class="thankyou-text">
+      A Bumble Bee Blinds design consultant will reach out<br>
+      to schedule your free consultation. See you soon!
+    </div>
+
+    <button class="btn-primary" onclick="resetForm()" style="margin-top:8px;">Next Guest &rarr;</button>
+  </div>
+
+</div>
+
+<!-- Toast Notification -->
+<div class="toast" id="toast"></div>
+
+<!-- Google Sheets Modal -->
+<div class="modal-overlay" id="sheetsModal">
+  <div class="modal">
+    <h2>Google Sheets Sync</h2>
+    <p>
+      To sync leads live to Google Sheets, you need a Google Apps Script web app URL.
+      <br><br>
+      <strong>Quick setup:</strong><br>
+      1. Create a Google Sheet with headers: Timestamp, First Name, Last Name, Email, Phone, Address, Products, Timeline, Promo Code<br>
+      2. Go to Extensions &rarr; Apps Script<br>
+      3. Paste the script (tap "Copy Script" below)<br>
+      4. Deploy &rarr; New Deployment &rarr; Web App &rarr; Anyone can access<br>
+      5. Paste the deployment URL below
+    </p>
+    <input type="text" id="sheetsUrl" placeholder="https://script.google.com/macros/s/...">
+    <div class="modal-btns">
+      <button class="cancel" onclick="closeSheetsModal()">Cancel</button>
+      <button class="save" onclick="copyAppsScript()">Copy Script</button>
+      <button class="save" onclick="saveSheetsUrl()">Save URL</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── State ──
+let leads = JSON.parse(localStorage.getItem('bbb_leads') || '[]');
+let selectedProducts = new Set();
+let promoCode = localStorage.getItem('bbb_promo') || 'BB185';
+let sheetsUrl = localStorage.getItem('bbb_sheets_url') || 'https://script.google.com/macros/s/AKfycbxFrtoaEuh0gCudYE6Gq5iq9bFCEBgjcHkzNCzU5ThSn2G9BhEVFYtsa1Qf3FAZ199_/exec';
+let currentLead = {};
+
+updateLeadCount();
+
+// ── Navigation ──
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function startForm() {
+  showScreen('contact');
+  document.getElementById('fname').focus();
+}
+
+function isValidEmail(email) {
+  return /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/.test(email);
+}
+
+function isValidPhone(phone) {
+  const digits = phone.replace(/\D/g, '');
+  return digits.length === 10;
+}
+
+// ── Address Mode ──
+let addrMode = 'zip';
+
+function setAddrMode(mode) {
+  addrMode = mode;
+  const input = document.getElementById('address');
+  const toggle = document.getElementById('addrToggle');
+  toggle.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+  toggle.querySelector('button:' + (mode === 'zip' ? 'first-child' : 'last-child')).classList.add('active');
+
+  if (mode === 'zip') {
+    input.placeholder = '33602';
+    input.autocomplete = 'postal-code';
+    input.inputMode = 'numeric';
+    input.maxLength = 5;
+    document.getElementById('address-error').textContent = 'Please enter a valid 5-digit zip code';
+    // If they had a full address, keep just the zip if present
+    const match = input.value.match(/\d{5}/);
+    if (match && input.value.length > 5) input.value = match[0];
+  } else {
+    input.placeholder = '123 Main St, Tampa, FL 33602';
+    input.autocomplete = 'street-address';
+    input.inputMode = 'text';
+    input.maxLength = 200;
+    document.getElementById('address-error').textContent = 'Please enter a full address (street, city, state, zip)';
+  }
+  clearError('address');
+  input.focus();
+}
+
+function isValidAddress(value) {
+  if (!value) return true; // optional field
+  if (addrMode === 'zip') {
+    return /^\d{5}$/.test(value);
+  } else {
+    // Full address: must have some text + a 5-digit zip, at least 10 chars
+    return value.length >= 10 && /\d{5}/.test(value);
+  }
+}
+
+// Auto-format zip: only allow digits, max 5
+document.getElementById('address').addEventListener('input', function(e) {
+  if (addrMode === 'zip') {
+    e.target.value = e.target.value.replace(/\D/g, '').slice(0, 5);
+  }
+});
+
+function goToProducts() {
+  // Validate
+  const fname = document.getElementById('fname');
+  const lname = document.getElementById('lname');
+  const email = document.getElementById('email');
+  const phone = document.getElementById('phone');
+  const address = document.getElementById('address');
+  let valid = true;
+
+  if (!fname.value.trim()) { showError('fname'); valid = false; } else { clearError('fname'); }
+  if (!lname.value.trim()) { showError('lname'); valid = false; } else { clearError('lname'); }
+  if (!isValidEmail(email.value.trim())) { showError('email'); valid = false; } else { clearError('email'); }
+  if (!isValidPhone(phone.value)) { showError('phone'); valid = false; } else { clearError('phone'); }
+  if (!isValidAddress(address.value.trim())) { showError('address'); valid = false; } else { clearError('address'); }
+
+  if (!valid) return;
+
+  currentLead = {
+    fname: fname.value.trim(),
+    lname: lname.value.trim(),
+    email: email.value.trim(),
+    phone: phone.value.trim(),
+    address: address.value.trim()
+  };
+
+  selectedProducts.clear();
+  document.querySelectorAll('.product-card').forEach(c => c.classList.remove('selected'));
+  showScreen('products');
+}
+
+function goBack() {
+  showScreen('contact');
+}
+
+// ── Products ──
+function toggleProduct(card) {
+  card.classList.toggle('selected');
+  const product = card.dataset.product;
+  if (selectedProducts.has(product)) {
+    selectedProducts.delete(product);
+  } else {
+    selectedProducts.add(product);
+  }
+}
+
+// ── Timeline ──
+let selectedTimeline = '';
+
+function goToTimeline() {
+  if (selectedProducts.size === 0) {
+    toast('Please select at least one product');
+    return;
+  }
+  selectedTimeline = '';
+  document.getElementById('btnSubmitLead').disabled = true;
+  document.querySelectorAll('#timelineGrid .product-card').forEach(c => c.classList.remove('selected'));
+  showScreen('timeline');
+}
+
+function selectTimeline(card, isOther) {
+  document.querySelectorAll('#timelineGrid .product-card').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+  const otherField = document.getElementById('otherTimelineField');
+  if (isOther) {
+    otherField.style.display = 'block';
+    document.getElementById('otherTimeline').focus();
+    selectedTimeline = '';
+    document.getElementById('btnSubmitLead').disabled = true;
+    document.getElementById('otherTimeline').oninput = function() {
+      selectedTimeline = this.value.trim() ? 'Other: ' + this.value.trim() : '';
+      document.getElementById('btnSubmitLead').disabled = !this.value.trim();
+    };
+  } else {
+    otherField.style.display = 'none';
+    document.getElementById('otherTimeline').value = '';
+    selectedTimeline = card.dataset.timeline;
+    document.getElementById('btnSubmitLead').disabled = false;
+  }
+}
+
+// ── Submit ──
+function submitLead() {
+  if (!selectedTimeline) {
+    toast('Please select your timeline');
+    return;
+  }
+
+  const lead = {
+    ...currentLead,
+    products: Array.from(selectedProducts).join(', '),
+    timeline: selectedTimeline,
+    promo: promoCode,
+    timestamp: new Date().toISOString()
+  };
+
+  leads.push(lead);
+  localStorage.setItem('bbb_leads', JSON.stringify(leads));
+  updateLeadCount();
+
+  // Update promo display
+  document.getElementById('promoDisplay').textContent = promoCode;
+
+  // Sync to Google Sheets
+  if (sheetsUrl) {
+    syncToSheets(lead);
+  }
+
+  showScreen('thanks');
+}
+
+// ── Reset ──
+function resetForm() {
+  document.getElementById('fname').value = '';
+  document.getElementById('lname').value = '';
+  document.getElementById('email').value = '';
+  document.getElementById('phone').value = '';
+  document.getElementById('address').value = '';
+  setAddrMode('zip');
+  ['fname','lname','email','phone','address'].forEach(clearError);
+  selectedProducts.clear();
+  selectedTimeline = '';
+  document.getElementById('otherTimeline').value = '';
+  document.getElementById('otherTimelineField').style.display = 'none';
+  document.querySelectorAll('.product-card').forEach(c => c.classList.remove('selected'));
+  currentLead = {};
+  showScreen('welcome');
+}
+
+// ── Validation Helpers ──
+function showError(field) {
+  document.getElementById(field).classList.add('error');
+  document.getElementById(field + '-error').style.display = 'block';
+}
+function clearError(field) {
+  document.getElementById(field).classList.remove('error');
+  document.getElementById(field + '-error').style.display = 'none';
+}
+
+// ── Admin ──
+function toggleAdmin() {
+  document.getElementById('adminBar').classList.toggle('visible');
+}
+
+function updateLeadCount() {
+  const count = leads.length;
+  document.getElementById('leadCount').textContent = count;
+}
+
+function downloadCSV() {
+  if (leads.length === 0) { toast('No leads to export'); return; }
+
+  const headers = ['Timestamp', 'First Name', 'Last Name', 'Email', 'Phone', 'Address', 'Products', 'Timeline', 'Promo Code'];
+  const rows = leads.map(l => [
+    l.timestamp,
+    l.fname,
+    l.lname,
+    l.email,
+    l.phone,
+    l.address || '',
+    l.products,
+    l.timeline || '',
+    l.promo
+  ]);
+
+  let csv = headers.join(',') + '\n';
+  rows.forEach(row => {
+    csv += row.map(cell => '"' + (cell || '').replace(/"/g, '""') + '"').join(',') + '\n';
+  });
+
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'bumble-bee-leads-' + new Date().toISOString().slice(0,10) + '.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+  toast('CSV downloaded!');
+}
+
+function editPromoCode() {
+  const code = prompt('Enter promo code:', promoCode);
+  if (code && code.trim()) {
+    promoCode = code.trim().toUpperCase();
+    localStorage.setItem('bbb_promo', promoCode);
+    toast('Promo code updated: ' + promoCode);
+  }
+}
+
+function confirmClear() {
+  if (confirm('Delete ALL ' + leads.length + ' leads? This cannot be undone.\n\nMake sure you downloaded the CSV first!')) {
+    leads = [];
+    localStorage.setItem('bbb_leads', '[]');
+    updateLeadCount();
+    toast('All leads cleared');
+  }
+}
+
+// ── Google Sheets Sync ──
+function showSheetsModal() {
+  document.getElementById('sheetsUrl').value = sheetsUrl;
+  document.getElementById('sheetsModal').classList.add('visible');
+}
+function closeSheetsModal() {
+  document.getElementById('sheetsModal').classList.remove('visible');
+}
+
+function saveSheetsUrl() {
+  const url = document.getElementById('sheetsUrl').value.trim();
+  sheetsUrl = url;
+  localStorage.setItem('bbb_sheets_url', url);
+  closeSheetsModal();
+  toast(url ? 'Google Sheets sync enabled!' : 'Google Sheets sync disabled');
+}
+
+function syncToSheets(lead) {
+  const params = new URLSearchParams({
+    timestamp: lead.timestamp,
+    fname: lead.fname,
+    lname: lead.lname,
+    email: lead.email,
+    phone: lead.phone,
+    address: lead.address || '',
+    products: lead.products,
+    timeline: lead.timeline || '',
+    promo: lead.promo
+  });
+  fetch(sheetsUrl + '?' + params.toString(), { mode: 'no-cors' }).catch(() => {});
+}
+
+function copyAppsScript() {
+  const script = `function doGet(e) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  sheet.appendRow([
+    e.parameter.timestamp,
+    e.parameter.fname,
+    e.parameter.lname,
+    e.parameter.email,
+    e.parameter.phone,
+    e.parameter.address,
+    e.parameter.products,
+    e.parameter.timeline,
+    e.parameter.promo
+  ]);
+  return ContentService.createTextOutput('OK');
+}`;
+
+  navigator.clipboard.writeText(script).then(() => {
+    toast('Apps Script copied to clipboard!');
+  }).catch(() => {
+    prompt('Copy this script:', script);
+  });
+}
+
+// ── Phone Formatting ──
+document.getElementById('phone').addEventListener('input', function(e) {
+  let val = e.target.value.replace(/\D/g, '');
+  if (val.length > 0) {
+    if (val.length <= 3) {
+      val = '(' + val;
+    } else if (val.length <= 6) {
+      val = '(' + val.slice(0,3) + ') ' + val.slice(3);
+    } else {
+      val = '(' + val.slice(0,3) + ') ' + val.slice(3,6) + '-' + val.slice(6,10);
+    }
+  }
+  e.target.value = val;
+});
+
+// ── Toast ──
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ── Prevent zoom on double-tap ──
+document.addEventListener('dblclick', e => e.preventDefault());
+</script>
+
+</body>
+</html>
