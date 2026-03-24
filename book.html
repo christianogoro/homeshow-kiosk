@@ -1195,12 +1195,15 @@ function isSlotBooked(dateStr, timeStr) {
 function loadCloudBookings() {
   if (!SHEETS_URL || SHEETS_URL === 'BOOKING_SHEETS_URL_HERE') return;
   updateSyncUI('syncing');
-  fetch(SHEETS_URL + '?action=list')
+  fetch(SHEETS_URL + '?action=list', { redirect: 'follow' })
     .then(r => {
+      if (r.status === 0 || r.type === 'opaque') throw new Error('CORS blocked');
       if (!r.ok) throw new Error('HTTP ' + r.status);
-      return r.json();
+      return r.text();
     })
-    .then(data => {
+    .then(text => {
+      var data;
+      try { data = JSON.parse(text); } catch(e) { throw new Error('Invalid JSON'); }
       if (Array.isArray(data)) {
         cloudBookings = data.map(b => ({ ...b, time: parseFormattedTime(b.time) }));
         updateBookingCount();
@@ -1210,7 +1213,8 @@ function loadCloudBookings() {
         updateSyncUI('synced');
       }
     })
-    .catch(() => {
+    .catch(err => {
+      console.error('Sync error:', err);
       updateSyncUI(navigator.onLine ? 'error' : 'offline');
     });
 }
