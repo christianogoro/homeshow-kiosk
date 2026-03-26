@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="apple-touch-icon" href="book-icon.png">
 <title>Bumble Bee Blinds — Book Consultation</title>
@@ -45,7 +45,7 @@
     letter-spacing: 0.5px;
   }
   .header .bee-icon { height: 36px; width: auto; }
-  .booking-count {
+  .lead-count {
     background: var(--buttercup);
     color: var(--coffee);
     padding: 4px 14px;
@@ -82,58 +82,6 @@
     margin-top: 4px;
   }
 
-  /* ── Sync Indicator ── */
-  .sync-dot {
-    width: 10px; height: 10px;
-    border-radius: 50%;
-    background: var(--success);
-    display: inline-block;
-    margin-right: 4px;
-    transition: background 0.3s;
-  }
-  .sync-dot.syncing { background: var(--buttercup); animation: pulse 0.8s infinite; }
-  .sync-dot.offline { background: var(--error); }
-  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
-  .sync-status {
-    font-size: 11px;
-    color: var(--chino);
-    display: flex;
-    align-items: center;
-    gap: 2px;
-  }
-  .offline-badge {
-    background: var(--error);
-    color: #fff;
-    padding: 2px 8px;
-    border-radius: 10px;
-    font-size: 11px;
-    font-weight: 700;
-    display: none;
-  }
-  .offline-badge.visible { display: inline-block; }
-
-  /* ── Booking List Modal ── */
-  .booking-list-item {
-    padding: 12px 0;
-    border-bottom: 1px solid #f0ebe3;
-    font-size: 14px;
-  }
-  .booking-list-item:last-child { border-bottom: none; }
-  .booking-list-item .bl-date {
-    font-weight: 700;
-    font-size: 15px;
-    color: var(--coffee);
-  }
-  .booking-list-item .bl-name {
-    font-weight: 600;
-    color: var(--coffee);
-  }
-  .booking-list-item .bl-detail {
-    color: #7a6e5f;
-    font-size: 13px;
-    margin-top: 2px;
-  }
-
   /* ── Container ── */
   .container {
     max-width: 700px;
@@ -163,7 +111,7 @@
   .step-dot.active { background: var(--buttercup); color: var(--coffee); transform: scale(1.15); }
   .step-dot.done { background: var(--success); }
   .step-line {
-    width: 36px; height: 3px;
+    width: 48px; height: 3px;
     background: var(--chino);
     transition: background 0.3s;
     flex-shrink: 0;
@@ -256,103 +204,6 @@
     display: none;
   }
 
-  /* ── Date Picker ── */
-  .date-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 6px;
-    margin-bottom: 16px;
-  }
-  .day-header {
-    text-align: center;
-    font-weight: 700;
-    font-size: 13px;
-    color: #7a6e5f;
-    padding: 4px 0;
-  }
-  .date-cell {
-    aspect-ratio: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border-radius: 12px;
-    cursor: pointer;
-    font-size: 18px;
-    font-weight: 600;
-    border: 2px solid transparent;
-    transition: all 0.2s;
-    user-select: none;
-    -webkit-user-select: none;
-  }
-  .date-cell.available {
-    background: #fff;
-    border-color: var(--chino);
-  }
-  .date-cell.available:active { transform: scale(0.95); }
-  .date-cell.selected {
-    background: var(--buttercup);
-    border-color: var(--buttercup);
-    color: var(--coffee);
-  }
-  .date-cell.unavailable {
-    color: #ccc;
-    cursor: not-allowed;
-  }
-  .date-cell.past {
-    color: #ddd;
-    cursor: not-allowed;
-  }
-  .date-cell .date-month {
-    font-size: 9px;
-    font-weight: 400;
-    color: #7a6e5f;
-    margin-top: 1px;
-  }
-  .date-cell.selected .date-month { color: var(--coffee); }
-
-  /* ── Time Slots ── */
-  .time-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-bottom: 16px;
-    flex: 1;
-  }
-  .time-slot {
-    background: #fff;
-    border: 2px solid var(--chino);
-    border-radius: 14px;
-    padding: 16px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.2s;
-    user-select: none;
-    -webkit-user-select: none;
-    font-size: 20px;
-    font-weight: 600;
-  }
-  .time-slot.selected {
-    border-color: var(--buttercup);
-    background: #fef7e0;
-    box-shadow: 0 0 0 2px var(--buttercup);
-  }
-  .time-slot.booked {
-    background: #f5f5f5;
-    color: #bbb;
-    border-color: #eee;
-    cursor: not-allowed;
-    text-decoration: line-through;
-  }
-  .time-slot:active:not(.booked) { transform: scale(0.97); }
-  .time-slot .slot-label {
-    font-size: 12px;
-    color: #7a6e5f;
-    font-weight: 400;
-    margin-top: 2px;
-  }
-  .time-slot.selected .slot-label { color: var(--coffee); }
-
   /* ── Product Grid ── */
   .product-grid {
     display: grid;
@@ -383,39 +234,6 @@
   .product-card.selected .product-icon { color: var(--buttercup); }
   .product-name { font-weight: 700; font-size: 17px; line-height: 1.2; }
   .product-desc { font-size: 13px; color: #7a6e5f; margin-top: 4px; }
-
-  /* ── Blocked Dates Section ── */
-  .blocked-section {
-    background: rgba(0,0,0,0.03);
-    border-radius: 12px;
-    padding: 12px 16px;
-    margin-top: 8px;
-  }
-  .blocked-section h3 {
-    font-size: 14px;
-    margin-bottom: 8px;
-  }
-  .blocked-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-  }
-  .blocked-tag {
-    background: var(--error);
-    color: #fff;
-    padding: 4px 10px;
-    border-radius: 8px;
-    font-size: 12px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .blocked-tag .remove {
-    cursor: pointer;
-    font-size: 14px;
-    opacity: 0.8;
-  }
 
   /* ── Buttons ── */
   .btn-primary {
@@ -494,17 +312,12 @@
     letter-spacing: 2px;
     margin-bottom: 8px;
   }
-  .thankyou-datetime {
-    color: #fff;
-    font-size: 28px;
-    font-weight: 800;
-    margin: 8px 0;
-    line-height: 1.3;
-  }
   .thankyou-detail {
-    color: var(--chino);
-    font-size: 16px;
-    line-height: 1.5;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 600;
+    margin: 8px 0;
+    line-height: 1.4;
   }
   .thankyou-products {
     color: var(--buttercup);
@@ -519,18 +332,18 @@
     line-height: 1.5;
     margin-bottom: 16px;
   }
-
-  /* ── No slots message ── */
-  .no-slots {
+  .scheduler-note {
+    background: #fff;
+    border: 2px solid var(--buttercup);
+    border-radius: 14px;
+    padding: 16px 20px;
     text-align: center;
-    padding: 40px 20px;
-    color: #7a6e5f;
-    font-size: 18px;
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    font-size: 16px;
+    color: var(--coffee);
+    margin: 16px 0;
+    line-height: 1.5;
   }
+  .scheduler-note strong { color: var(--buttercup); }
 
   /* ── Toast ── */
   .toast {
@@ -561,8 +374,6 @@
     .field label { font-size: 14px; }
     .field input, .field select, .field textarea { padding: 10px 14px; font-size: 16px; }
     .field textarea { min-height: 60px; font-size: 14px; }
-    .date-cell { font-size: 14px; }
-    .time-slot { padding: 10px; font-size: 16px; }
     .product-card { padding: 10px 8px; }
     .product-icon svg { width: 28px; height: 28px; }
     .product-name { font-size: 13px; }
@@ -582,7 +393,6 @@
     .welcome-sub { font-size: 20px; }
     .welcome-cta { padding: 18px 60px; font-size: 24px; }
     .field input, .field select, .field textarea { padding: 12px 16px; font-size: 18px; }
-    .time-slot { padding: 12px; font-size: 18px; }
     .product-icon svg { width: 34px; height: 34px; }
     .product-name { font-size: 15px; }
     .product-desc { font-size: 12px; }
@@ -601,8 +411,6 @@
     .field label { font-size: 22px; }
     .field input, .field select, .field textarea { padding: 20px 22px; font-size: 24px; }
     .field textarea { min-height: 100px; }
-    .date-cell { font-size: 22px; }
-    .time-slot { padding: 20px; font-size: 24px; }
     .product-card { padding: 24px 16px; }
     .product-icon svg { width: 56px; height: 56px; }
     .product-name { font-size: 22px; }
@@ -625,9 +433,7 @@
     <h1>BOOK CONSULTATION</h1>
   </div>
   <div style="display:flex;align-items:center;gap:8px;">
-    <div class="sync-status" id="syncStatus"><span class="sync-dot" id="syncDot"></span><span id="syncLabel">Synced</span></div>
-    <span class="offline-badge" id="offlineBadge">OFFLINE</span>
-    <span class="booking-count" id="bookingCount">0</span>
+    <span class="lead-count" id="leadCount">0</span>
     <button onclick="toggleAdmin()" style="background:none;border:none;color:var(--chino);font-size:20px;cursor:pointer;">&#9881;</button>
   </div>
 </div>
@@ -635,10 +441,7 @@
 <!-- Admin Bar -->
 <div class="admin-bar" id="adminBar">
   <button class="admin-btn" onclick="downloadCSV()">&#128229; CSV</button>
-  <button class="admin-btn" onclick="showBookingsModal()">&#128203; Bookings</button>
-  <button class="admin-btn" onclick="showBlockModal()">&#128683; Block</button>
-  <button class="admin-btn" onclick="showScriptModal()">&#128214; Setup</button>
-  <button class="admin-btn" onclick="retryOfflineQueue()">&#128259; Retry Queue</button>
+  <button class="admin-btn" onclick="showLeadsModal()">&#128203; Leads</button>
   <button class="admin-btn danger" onclick="confirmClear()">&#128465; Clear</button>
   <div class="admin-status" id="adminStatus"></div>
 </div>
@@ -658,8 +461,8 @@
     </div>
   </div>
 
-  <!-- SCREEN 1: Pick a Date -->
-  <div class="screen" id="screen-date">
+  <!-- SCREEN 1: Product Interest -->
+  <div class="screen" id="screen-products">
     <div class="progress">
       <div class="step-dot active">1</div>
       <div class="step-line"></div>
@@ -668,54 +471,6 @@
       <div class="step-dot">3</div>
       <div class="step-line"></div>
       <div class="step-dot">4</div>
-      <div class="step-line"></div>
-      <div class="step-dot">5</div>
-    </div>
-
-    <div class="screen-title">Pick a Date</div>
-    <div class="screen-sub">Next 30 days available</div>
-
-    <div class="date-grid" id="dateGrid"></div>
-
-    <button class="btn-primary" onclick="goToTime()" id="btnToTime" disabled>Select a Date</button>
-  </div>
-
-  <!-- SCREEN 2: Pick a Time -->
-  <div class="screen" id="screen-time">
-    <div class="progress">
-      <div class="step-dot done">&#10003;</div>
-      <div class="step-line done"></div>
-      <div class="step-dot active">2</div>
-      <div class="step-line"></div>
-      <div class="step-dot">3</div>
-      <div class="step-line"></div>
-      <div class="step-dot">4</div>
-      <div class="step-line"></div>
-      <div class="step-dot">5</div>
-    </div>
-
-    <div class="screen-title" id="timeTitle">Select a Time</div>
-    <div class="screen-sub" id="timeSub"></div>
-
-    <div class="time-grid" id="timeGrid"></div>
-    <div class="no-slots" id="noSlots" style="display:none;">No available slots on this date.<br>Please go back and pick another day.</div>
-
-    <button class="btn-primary" onclick="goToProducts()" id="btnToProducts" disabled>Next &rarr;</button>
-    <button class="btn-secondary" onclick="showScreen('date')">&#8592; Back</button>
-  </div>
-
-  <!-- SCREEN 3: Product Interest -->
-  <div class="screen" id="screen-products">
-    <div class="progress">
-      <div class="step-dot done">&#10003;</div>
-      <div class="step-line done"></div>
-      <div class="step-dot done">&#10003;</div>
-      <div class="step-line done"></div>
-      <div class="step-dot active">3</div>
-      <div class="step-line"></div>
-      <div class="step-dot">4</div>
-      <div class="step-line"></div>
-      <div class="step-dot">5</div>
     </div>
 
     <div class="screen-title">What Interests You?</div>
@@ -785,21 +540,18 @@
     </div>
 
     <button class="btn-primary" onclick="goToContact()">Next &rarr;</button>
-    <button class="btn-secondary" onclick="showScreen('time')">&#8592; Back</button>
   </div>
 
-  <!-- SCREEN 4: Contact Info + Notes -->
+  <!-- SCREEN 2: Contact Info + Notes -->
   <div class="screen" id="screen-contact">
     <div class="progress">
       <div class="step-dot done">&#10003;</div>
       <div class="step-line done"></div>
-      <div class="step-dot done">&#10003;</div>
-      <div class="step-line done"></div>
-      <div class="step-dot done">&#10003;</div>
-      <div class="step-line done"></div>
-      <div class="step-dot active">4</div>
+      <div class="step-dot active">2</div>
       <div class="step-line"></div>
-      <div class="step-dot">5</div>
+      <div class="step-dot">3</div>
+      <div class="step-line"></div>
+      <div class="step-dot">4</div>
     </div>
 
     <div class="screen-title">Your Details</div>
@@ -836,38 +588,38 @@
       <textarea id="notes" placeholder="Number of windows, room types, special requests, etc." rows="3"></textarea>
     </div>
 
-    <button class="btn-primary" onclick="goToConfirm()">Review Booking &rarr;</button>
+    <button class="btn-primary" onclick="goToConfirm()">Review &rarr;</button>
     <button class="btn-secondary" onclick="showScreen('products')">&#8592; Back</button>
   </div>
 
-  <!-- SCREEN 5: Confirm -->
+  <!-- SCREEN 3: Confirm -->
   <div class="screen" id="screen-confirm">
     <div class="progress">
       <div class="step-dot done">&#10003;</div>
       <div class="step-line done"></div>
       <div class="step-dot done">&#10003;</div>
       <div class="step-line done"></div>
-      <div class="step-dot done">&#10003;</div>
-      <div class="step-line done"></div>
-      <div class="step-dot done">&#10003;</div>
-      <div class="step-line done"></div>
-      <div class="step-dot active">5</div>
+      <div class="step-dot active">3</div>
+      <div class="step-line"></div>
+      <div class="step-dot">4</div>
     </div>
 
-    <div class="screen-title">Confirm Booking</div>
-    <div class="screen-sub">Please review your details</div>
+    <div class="screen-title">Confirm Details</div>
+    <div class="screen-sub">Review, then pick your time</div>
 
     <div class="confirm-box" id="confirmDetails"></div>
 
-    <button class="btn-primary" onclick="submitBooking()">Confirm Booking</button>
+    <div class="scheduler-note">
+      Next, our scheduler will open so you can<br><strong>pick a date & time that works for you</strong>
+    </div>
+
+    <button class="btn-primary" onclick="submitAndSchedule()">Choose Date & Time &rarr;</button>
     <button class="btn-secondary" onclick="showScreen('contact')">&#8592; Back</button>
   </div>
 
-  <!-- SCREEN 6: Thank You -->
+  <!-- SCREEN 4: Thank You -->
   <div class="screen" id="screen-thanks">
     <div class="progress">
-      <div class="step-dot done">&#10003;</div>
-      <div class="step-line done"></div>
       <div class="step-dot done">&#10003;</div>
       <div class="step-line done"></div>
       <div class="step-dot done">&#10003;</div>
@@ -878,17 +630,16 @@
     </div>
 
     <img src="bee-icon.png" class="thankyou-bee" alt="">
-    <div class="screen-title">You're Booked!</div>
+    <div class="screen-title">You're All Set!</div>
 
     <div class="thankyou-box">
       <div class="thankyou-label">Your Consultation</div>
-      <div class="thankyou-datetime" id="thanksDateTime"></div>
-      <div class="thankyou-detail">3-hour in-home consultation<br>with a design expert</div>
+      <div class="thankyou-detail">Your details have been saved and<br>your appointment is being scheduled</div>
       <div class="thankyou-products" id="thanksProducts"></div>
     </div>
 
     <div class="thankyou-text">
-      A confirmation has been sent to your email.<br>
+      A design consultant will visit your home<br>at the time you selected.<br><br>
       We look forward to seeing you!
     </div>
 
@@ -900,453 +651,56 @@
 <!-- Toast -->
 <div class="toast" id="toast"></div>
 
-<!-- Block Time Modal -->
-<div style="position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:300;display:none;align-items:center;justify-content:center;" id="blockModal">
-  <div style="background:#fff;border-radius:18px;padding:32px 24px;width:90%;max-width:500px;max-height:80vh;overflow-y:auto;">
-    <h2 style="font-size:20px;margin-bottom:16px;">Block Date/Time</h2>
-    <p style="font-size:14px;color:#7a6e5f;margin-bottom:16px;">Block a date or specific time slot so customers can't book it.</p>
-    <div class="field">
-      <label>Date</label>
-      <input type="date" id="blockDate">
-    </div>
-    <div class="field">
-      <label>Time (leave blank to block whole day)</label>
-      <select id="blockTime">
-        <option value="">-- Block entire day --</option>
-        <option value="09:00">9:00 AM - 12:00 PM</option>
-        <option value="12:00">12:00 PM - 3:00 PM</option>
-        <option value="15:00">3:00 PM - 6:00 PM</option>
-        <option value="18:00">6:00 PM - 9:00 PM</option>
-      </select>
-    </div>
-    <div style="display:flex;gap:10px;margin-top:12px;">
-      <button onclick="closeBlockModal()" style="flex:1;padding:12px;border-radius:10px;font-size:15px;font-weight:600;background:#eee;border:none;cursor:pointer;">Cancel</button>
-      <button onclick="addBlock()" style="flex:1;padding:12px;border-radius:10px;font-size:15px;font-weight:600;background:var(--buttercup);border:none;cursor:pointer;">Block</button>
-    </div>
-    <div id="blockedList" style="margin-top:16px;"></div>
-  </div>
-</div>
-
-<!-- Bookings List Modal -->
-<div style="position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:300;display:none;align-items:center;justify-content:center;" id="bookingsModal">
+<!-- Leads List Modal -->
+<div style="position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:300;display:none;align-items:center;justify-content:center;" id="leadsModal">
   <div style="background:#fff;border-radius:18px;padding:32px 24px;width:90%;max-width:600px;max-height:80vh;overflow-y:auto;">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
-      <h2 style="font-size:20px;">Upcoming Bookings</h2>
-      <button onclick="closeBookingsModal()" style="background:none;border:none;font-size:24px;cursor:pointer;color:#7a6e5f;">&times;</button>
+      <h2 style="font-size:20px;">Saved Leads</h2>
+      <button onclick="closeLeadsModal()" style="background:none;border:none;font-size:24px;cursor:pointer;color:#7a6e5f;">&times;</button>
     </div>
-    <div id="bookingsListContent"></div>
+    <div id="leadsListContent"></div>
   </div>
 </div>
 
-<!-- Apps Script Setup Modal -->
-<div style="position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:300;display:none;align-items:center;justify-content:center;" id="scriptModal">
-  <div style="background:#fff;border-radius:18px;padding:32px 24px;width:90%;max-width:600px;max-height:80vh;overflow-y:auto;">
-    <h2 style="font-size:20px;margin-bottom:12px;">Google Sheets Setup</h2>
-    <p style="font-size:14px;color:#7a6e5f;margin-bottom:16px;line-height:1.5;">
-      This script handles booking sync between iPads and sends confirmation emails.<br><br>
-      <strong>Setup:</strong><br>
-      1. Create a Google Sheet with headers:<br>
-      <code style="font-size:12px;">Timestamp | Date | Time | First Name | Last Name | Email | Phone | Address | Products | Notes | Duration</code><br>
-      2. Go to Extensions &rarr; Apps Script<br>
-      3. Replace all code with the script below<br>
-      4. Deploy &rarr; New Deployment &rarr; Web App &rarr; Execute as: Me &rarr; Who has access: Anyone<br>
-      5. Copy the deployment URL and update it in the app code
-    </p>
-    <textarea id="scriptContent" readonly style="width:100%;height:250px;padding:12px;border:2px solid var(--chino);border-radius:10px;font-family:monospace;font-size:11px;line-height:1.4;resize:vertical;background:#f9f9f9;"></textarea>
-    <div style="display:flex;gap:10px;margin-top:12px;">
-      <button onclick="closeScriptModal()" style="flex:1;padding:12px;border-radius:10px;font-size:15px;font-weight:600;background:#eee;border:none;cursor:pointer;">Close</button>
-      <button onclick="copyScript()" style="flex:1;padding:12px;border-radius:10px;font-size:15px;font-weight:600;background:var(--buttercup);border:none;cursor:pointer;">Copy Script</button>
-    </div>
-  </div>
-</div>
+<!-- ServiceTitan Scheduling Pro Widget -->
+<script
+  data-api-key="im8ykhaa81lii0dvk88bzln0"
+  data-schedulerid="sched_tz7v8bdtdhccni2u02lc8tpx"
+  defer
+  id="se-widget-embed"
+  src="https://embed.scheduler.servicetitan.com/scheduler-v1.js"
+></script>
 
 <script>
 // ── Config ──
-const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxuYFnHUYUpzj_E7C-qXmGKm_zJv0fhWjUsYaoQj4SEgusi2WSyt-sH5ZSPoB_P3QTQuA/exec';
-const START_HOUR = 9;
-const END_HOUR = 21;
-const SLOT_DURATION = 3;
-const DAYS_AHEAD = 30;
+var SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxuYFnHUYUpzj_E7C-qXmGKm_zJv0fhWjUsYaoQj4SEgusi2WSyt-sH5ZSPoB_P3QTQuA/exec';
 
 // ── State ──
-let bookings = JSON.parse(localStorage.getItem('bbb_bookings') || '[]');
-let cloudBookings = [];
-let blockedSlots = JSON.parse(localStorage.getItem('bbb_blocked') || '[]');
-let offlineQueue = JSON.parse(localStorage.getItem('bbb_offline_queue') || '[]');
-let selectedDate = null;
-let selectedTime = null;
-let selectedProducts = new Set();
-let currentBooking = {};
-let isOnline = navigator.onLine;
+var leads = JSON.parse(localStorage.getItem('bbb_book_leads') || '[]');
+var selectedProducts = new Set();
+var currentBooking = {};
 
-updateBookingCount();
-updateSyncUI('syncing');
-loadCloudBookings();
-retryOfflineQueue();
-
-// ── Sync Agent: poll Google Sheets every 15s to keep 2 iPads current ──
-const SYNC_INTERVAL = 15000;
-let syncTimer = null;
-
-function startSyncAgent() {
-  if (syncTimer) return;
-  syncTimer = setInterval(() => {
-    loadCloudBookings();
-  }, SYNC_INTERVAL);
-}
-
-function stopSyncAgent() {
-  if (syncTimer) {
-    clearInterval(syncTimer);
-    syncTimer = null;
-  }
-}
-
-startSyncAgent();
-
-// Sync on wake + online/offline detection
-document.addEventListener('visibilitychange', () => {
-  if (document.visibilityState === 'visible') {
-    loadCloudBookings();
-    retryOfflineQueue();
-    startSyncAgent();
-  } else {
-    stopSyncAgent();
-  }
-});
-
-window.addEventListener('online', () => {
-  isOnline = true;
-  updateSyncUI('syncing');
-  loadCloudBookings();
-  retryOfflineQueue();
-});
-
-window.addEventListener('offline', () => {
-  isOnline = false;
-  updateSyncUI('offline');
-});
-
-// ── Sync UI ──
-function updateSyncUI(state) {
-  const dot = document.getElementById('syncDot');
-  const label = document.getElementById('syncLabel');
-  const badge = document.getElementById('offlineBadge');
-
-  dot.className = 'sync-dot';
-  badge.classList.remove('visible');
-
-  if (state === 'synced') {
-    // green is the default (no extra class needed)
-    label.textContent = 'Synced';
-  } else if (state === 'syncing') {
-    dot.classList.add('syncing');
-    label.textContent = 'Syncing...';
-  } else if (state === 'offline') {
-    dot.classList.add('offline');
-    label.textContent = 'Offline';
-    badge.classList.add('visible');
-  } else if (state === 'error') {
-    dot.classList.add('offline');
-    label.textContent = 'Sync error';
-  }
-
-  // Show offline queue count
-  const queueCount = offlineQueue.length;
-  const statusEl = document.getElementById('adminStatus');
-  if (queueCount > 0) {
-    badge.textContent = queueCount + ' queued';
-    badge.classList.add('visible');
-    statusEl.textContent = queueCount + ' booking(s) waiting to sync';
-  } else {
-    statusEl.textContent = '';
-  }
-}
-
-// ── Generate available time slots for a day ──
-function getTimeSlots() {
-  const slots = [];
-  for (let h = START_HOUR; h + SLOT_DURATION <= END_HOUR; h += SLOT_DURATION) {
-    slots.push(h.toString().padStart(2, '0') + ':00');
-  }
-  return slots;
-}
-
-// ── Parse formatted time back to raw slot format ──
-function parseFormattedTime(formatted) {
-  // "9 AM - 12 PM" → "09:00", already raw "09:00" passes through
-  if (!formatted) return formatted;
-  if (/^\d{2}:\d{2}$/.test(formatted)) return formatted; // already HH:MM
-  var match = formatted.match(/^(\d+)\s*(AM|PM)/i);
-  if (!match) return formatted;
-  var h = parseInt(match[1]);
-  var ampm = match[2].toUpperCase();
-  if (ampm === 'PM' && h < 12) h += 12;
-  if (ampm === 'AM' && h === 12) h = 0;
-  return h.toString().padStart(2, '0') + ':00';
-}
-
-// ── Format helpers ──
-function formatDate(dateStr) {
-  const d = new Date(dateStr + 'T12:00:00');
-  return d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
-}
-
-function formatTime(timeStr) {
-  const h = parseInt(timeStr.split(':')[0]);
-  const endH = h + SLOT_DURATION;
-  const fmt = (hr) => {
-    const ampm = hr >= 12 ? 'PM' : 'AM';
-    const h12 = hr > 12 ? hr - 12 : hr;
-    return h12 + ' ' + ampm;
-  };
-  return fmt(h) + ' - ' + fmt(endH);
-}
-
-function formatDateShort(dateStr) {
-  const d = new Date(dateStr + 'T12:00:00');
-  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-}
+updateLeadCount();
 
 // ── Navigation ──
 function showScreen(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
   document.getElementById('screen-' + id).classList.add('active');
   window.scrollTo(0, 0);
 }
 
 function startBooking() {
-  loadCloudBookings(); // fresh sync before showing dates
-  buildDateGrid();
-  selectedDate = null;
-  selectedTime = null;
   selectedProducts.clear();
-  document.querySelectorAll('#screen-products .product-card').forEach(c => c.classList.remove('selected'));
-  showScreen('date');
-}
-
-// ── Date Grid ──
-function buildDateGrid() {
-  const grid = document.getElementById('dateGrid');
-  grid.innerHTML = '';
-
-  const dayHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  dayHeaders.forEach(d => {
-    const el = document.createElement('div');
-    el.className = 'day-header';
-    el.textContent = d;
-    grid.appendChild(el);
-  });
-
-  const today = new Date();
-  today.setHours(0,0,0,0);
-
-  const start = new Date(today);
-  start.setDate(start.getDate() + 1);
-
-  const end = new Date(today);
-  end.setDate(end.getDate() + DAYS_AHEAD);
-
-  const firstDow = start.getDay();
-  for (let i = 0; i < firstDow; i++) {
-    const empty = document.createElement('div');
-    empty.className = 'date-cell';
-    grid.appendChild(empty);
-  }
-
-  const current = new Date(start);
-  while (current <= end) {
-    const dateStr = current.toISOString().slice(0, 10);
-    const dayNum = current.getDate();
-    const monthStr = current.toLocaleDateString('en-US', { month: 'short' });
-
-    const cell = document.createElement('div');
-    const isFullyBlocked = isDateBlocked(dateStr);
-    const availableSlots = getAvailableSlotsForDate(dateStr);
-
-    if (isFullyBlocked || availableSlots.length === 0) {
-      cell.className = 'date-cell unavailable';
-    } else {
-      cell.className = 'date-cell available';
-      cell.onclick = () => selectDate(dateStr, cell);
-    }
-
-    cell.innerHTML = dayNum + '<span class="date-month">' + monthStr + '</span>';
-    cell.dataset.date = dateStr;
-    grid.appendChild(cell);
-
-    current.setDate(current.getDate() + 1);
-  }
-}
-
-function isDateBlocked(dateStr) {
-  return blockedSlots.some(b => b.date === dateStr && !b.time);
-}
-
-function isSlotBlocked(dateStr, timeStr) {
-  return blockedSlots.some(b => b.date === dateStr && (b.time === timeStr || !b.time));
-}
-
-function isSlotBooked(dateStr, timeStr) {
-  return bookings.some(b => b.date === dateStr && b.time === timeStr) ||
-         cloudBookings.some(b => b.date === dateStr && b.time === timeStr);
-}
-
-function loadCloudBookings() {
-  if (!SHEETS_URL || SHEETS_URL === 'BOOKING_SHEETS_URL_HERE') return;
-  updateSyncUI('syncing');
-  fetch(SHEETS_URL + '?action=list', { redirect: 'follow', credentials: 'omit' })
-    .then(r => r.text())
-    .then(text => {
-      console.log('Sheets response:', text.substring(0, 200));
-      var data = JSON.parse(text);
-      if (Array.isArray(data)) {
-        cloudBookings = data.map(b => ({ ...b, time: parseFormattedTime(b.time) }));
-        updateBookingCount();
-        refreshTimeSlotsIfVisible();
-        refreshDateGridIfVisible();
-        isOnline = true;
-        updateSyncUI('synced');
-      }
-    })
-    .catch(err => {
-      console.error('Sync error:', err.message, err);
-      updateSyncUI(navigator.onLine ? 'error' : 'offline');
-    });
-}
-
-function refreshTimeSlotsIfVisible() {
-  const timeScreen = document.getElementById('screen-time');
-  if (!timeScreen.classList.contains('active') || !selectedDate) return;
-
-  // Re-check each time slot's booked/blocked status
-  const slots = document.querySelectorAll('#timeGrid .time-slot');
-  slots.forEach(slot => {
-    // Extract the time from the slot text
-    const timeText = slot.childNodes[0].textContent;
-    const allSlots = getTimeSlots();
-    const matchingTime = allSlots.find(t => formatTime(t) === timeText);
-    if (!matchingTime) return;
-
-    const booked = isSlotBooked(selectedDate, matchingTime);
-    const blocked = isSlotBlocked(selectedDate, matchingTime);
-
-    if ((booked || blocked) && !slot.classList.contains('booked')) {
-      // Slot just became unavailable — mark it
-      slot.classList.add('booked');
-      slot.classList.remove('selected');
-      slot.onclick = null;
-      const label = slot.querySelector('.slot-label');
-      if (label) label.textContent = booked ? 'Booked' : 'Unavailable';
-
-      // If this was the selected time, deselect it
-      if (selectedTime === matchingTime) {
-        selectedTime = null;
-        document.getElementById('btnToProducts').disabled = true;
-        toast('That time slot was just booked. Please pick another.');
-      }
-    }
-  });
-}
-
-function refreshDateGridIfVisible() {
-  const dateScreen = document.getElementById('screen-date');
-  if (!dateScreen.classList.contains('active')) return;
-
-  // Re-check each date cell's availability
-  document.querySelectorAll('.date-cell[data-date]').forEach(cell => {
-    const dateStr = cell.dataset.date;
-    const isFullyBlocked = isDateBlocked(dateStr);
-    const availableSlots = getAvailableSlotsForDate(dateStr);
-
-    if ((isFullyBlocked || availableSlots.length === 0) && cell.classList.contains('available')) {
-      cell.className = 'date-cell unavailable';
-      cell.onclick = null;
-
-      if (selectedDate === dateStr) {
-        selectedDate = null;
-        document.getElementById('btnToTime').disabled = true;
-        document.getElementById('btnToTime').textContent = 'Select a Date';
-        toast('That date is no longer available. Please pick another.');
-      }
-    }
-  });
-}
-
-function getAvailableSlotsForDate(dateStr) {
-  return getTimeSlots().filter(t => !isSlotBlocked(dateStr, t) && !isSlotBooked(dateStr, t));
-}
-
-function selectDate(dateStr, cell) {
-  document.querySelectorAll('.date-cell').forEach(c => c.classList.remove('selected'));
-  cell.classList.add('selected');
-  selectedDate = dateStr;
-  document.getElementById('btnToTime').disabled = false;
-  document.getElementById('btnToTime').textContent = formatDate(dateStr) + ' \u2192';
-}
-
-// ── Time Slots ──
-function goToTime() {
-  if (!selectedDate) return;
-  loadCloudBookings(); // fresh sync before showing time slots
-
-  document.getElementById('timeSub').textContent = formatDate(selectedDate);
-  const grid = document.getElementById('timeGrid');
-  const noSlots = document.getElementById('noSlots');
-  grid.innerHTML = '';
-  selectedTime = null;
-  document.getElementById('btnToProducts').disabled = true;
-
-  const slots = getTimeSlots();
-  const available = getAvailableSlotsForDate(selectedDate);
-
-  if (available.length === 0) {
-    grid.style.display = 'none';
-    noSlots.style.display = 'flex';
-  } else {
-    grid.style.display = 'grid';
-    noSlots.style.display = 'none';
-
-    slots.forEach(time => {
-      const booked = isSlotBooked(selectedDate, time);
-      const blocked = isSlotBlocked(selectedDate, time);
-
-      const slot = document.createElement('div');
-      slot.className = 'time-slot' + (booked || blocked ? ' booked' : '');
-      slot.innerHTML = formatTime(time) + (booked ? '<div class="slot-label">Booked</div>' : blocked ? '<div class="slot-label">Unavailable</div>' : '<div class="slot-label">Available</div>');
-
-      if (!booked && !blocked) {
-        slot.onclick = () => selectTime(time, slot);
-      }
-
-      grid.appendChild(slot);
-    });
-  }
-
-  showScreen('time');
-}
-
-function selectTime(time, slot) {
-  document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
-  slot.classList.add('selected');
-  selectedTime = time;
-  document.getElementById('btnToProducts').disabled = false;
-}
-
-// ── Products ──
-function goToProducts() {
-  if (!selectedTime) return;
+  document.querySelectorAll('#screen-products .product-card').forEach(function(c) { c.classList.remove('selected'); });
   showScreen('products');
 }
 
+// ── Products ──
 function toggleProduct(card) {
   card.classList.toggle('selected');
-  const product = card.dataset.product;
-  if (selectedProducts.has(product)) {
-    selectedProducts.delete(product);
-  } else {
-    selectedProducts.add(product);
-  }
+  var product = card.dataset.product;
+  if (selectedProducts.has(product)) selectedProducts.delete(product);
+  else selectedProducts.add(product);
 }
 
 // ── Contact ──
@@ -1356,44 +710,48 @@ function goToContact() {
     return;
   }
   showScreen('contact');
-  document.getElementById('fname').focus();
 }
 
 // ── Validation ──
 function isValidEmail(email) {
-  return /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/.test(email);
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
 function isValidPhone(phone) {
-  return phone.replace(/\D/g, '').length === 10;
+  return phone.replace(/\D/g, '').length >= 10;
 }
 
 function showError(field) {
   document.getElementById(field).classList.add('error');
   document.getElementById(field + '-error').style.display = 'block';
 }
+
 function clearError(field) {
   document.getElementById(field).classList.remove('error');
   document.getElementById(field + '-error').style.display = 'none';
 }
 
+// ── Confirm Screen ──
 function goToConfirm() {
-  const fname = document.getElementById('fname');
-  const lname = document.getElementById('lname');
-  const email = document.getElementById('email');
-  const phone = document.getElementById('phone');
-  const address = document.getElementById('address');
-  const notes = document.getElementById('notes');
-  let valid = true;
+  var fname = document.getElementById('fname');
+  var lname = document.getElementById('lname');
+  var email = document.getElementById('email');
+  var phone = document.getElementById('phone');
+  var address = document.getElementById('address');
+  var notes = document.getElementById('notes');
+
+  var valid = true;
 
   if (!fname.value.trim()) { showError('fname'); valid = false; } else { clearError('fname'); }
   if (!lname.value.trim()) { showError('lname'); valid = false; } else { clearError('lname'); }
   if (!isValidEmail(email.value.trim())) { showError('email'); valid = false; } else { clearError('email'); }
   if (!isValidPhone(phone.value)) { showError('phone'); valid = false; } else { clearError('phone'); }
-  const addrVal = address.value.trim();
-  const addrHasStreet = /\d+\s+\w/.test(addrVal);
-  const addrHasZip = /\b\d{5}\b/.test(addrVal);
-  if (!addrVal || addrVal.length < 10 || !addrHasStreet || !addrHasZip) {
+
+  var addrVal = address.value.trim();
+  var addrHasStreet = /\d+\s+\w/.test(addrVal);
+  var addrHasZip = /\b\d{5}\b/.test(addrVal);
+
+  if (!addrVal || !addrHasStreet || !addrHasZip) {
     showError('address');
     if (addrVal && !addrHasStreet) document.getElementById('address-error').textContent = 'Include a street number (e.g. 123 Main St)';
     else if (addrVal && !addrHasZip) document.getElementById('address-error').textContent = 'Include a 5-digit zip code';
@@ -1410,73 +768,118 @@ function goToConfirm() {
     phone: phone.value.trim(),
     address: address.value.trim(),
     products: Array.from(selectedProducts).join(', '),
-    notes: notes.value.trim(),
-    date: selectedDate,
-    time: selectedTime
+    notes: notes.value.trim()
   };
 
   // Build confirmation
-  const details = document.getElementById('confirmDetails');
-  let html = `
-    <div class="confirm-row"><span class="confirm-label">Date</span><span class="confirm-value">${formatDate(selectedDate)}</span></div>
-    <div class="confirm-row"><span class="confirm-label">Time</span><span class="confirm-value">${formatTime(selectedTime)}</span></div>
-    <div class="confirm-row"><span class="confirm-label">Name</span><span class="confirm-value">${currentBooking.fname} ${currentBooking.lname}</span></div>
-    <div class="confirm-row"><span class="confirm-label">Email</span><span class="confirm-value">${currentBooking.email}</span></div>
-    <div class="confirm-row"><span class="confirm-label">Phone</span><span class="confirm-value">${currentBooking.phone}</span></div>
-    <div class="confirm-row"><span class="confirm-label">Address</span><span class="confirm-value">${currentBooking.address}</span></div>
-    <div class="confirm-row"><span class="confirm-label">Products</span><span class="confirm-value">${currentBooking.products}</span></div>
-    <div class="confirm-row"><span class="confirm-label">Duration</span><span class="confirm-value">3 hours</span></div>
-  `;
+  var details = document.getElementById('confirmDetails');
+  var html = '<div class="confirm-row"><span class="confirm-label">Name</span><span class="confirm-value">' + currentBooking.fname + ' ' + currentBooking.lname + '</span></div>' +
+    '<div class="confirm-row"><span class="confirm-label">Email</span><span class="confirm-value">' + currentBooking.email + '</span></div>' +
+    '<div class="confirm-row"><span class="confirm-label">Phone</span><span class="confirm-value">' + currentBooking.phone + '</span></div>' +
+    '<div class="confirm-row"><span class="confirm-label">Address</span><span class="confirm-value">' + currentBooking.address + '</span></div>' +
+    '<div class="confirm-row"><span class="confirm-label">Products</span><span class="confirm-value">' + currentBooking.products + '</span></div>';
 
   if (currentBooking.notes) {
-    html += `<div class="confirm-row notes-row"><span class="confirm-label">Notes</span><span class="confirm-value">${currentBooking.notes}</span></div>`;
+    html += '<div class="confirm-row notes-row"><span class="confirm-label">Notes</span><span class="confirm-value">' + currentBooking.notes + '</span></div>';
   }
-
-  html += `<div style="text-align:center;margin-top:12px;"><span onclick="editField('contact')" style="color:var(--buttercup);font-weight:600;font-size:15px;cursor:pointer;text-decoration:underline;">Edit Details / Notes</span></div>`;
 
   details.innerHTML = html;
   showScreen('confirm');
 }
 
-// ── Edit from Confirm ──
-function editField(screen) {
-  showScreen(screen);
-  if (screen === 'contact') {
-    document.getElementById('notes').focus();
-  }
-}
+// ── Submit + Launch ServiceTitan Scheduler ──
+function submitAndSchedule() {
+  var booking = {
+    timestamp: new Date().toISOString(),
+    fname: currentBooking.fname,
+    lname: currentBooking.lname,
+    email: currentBooking.email,
+    phone: currentBooking.phone,
+    address: currentBooking.address,
+    products: currentBooking.products,
+    notes: currentBooking.notes
+  };
 
-// ── Submit ──
-function submitBooking() {
-  // Final check: make sure the slot hasn't been booked while user was filling in details
-  if (isSlotBooked(selectedDate, selectedTime)) {
-    toast('Sorry, that time slot was just booked! Please pick another time.');
-    showScreen('time');
-    goToTime();
+  // Save locally
+  leads.push(booking);
+  localStorage.setItem('bbb_book_leads', JSON.stringify(leads));
+  updateLeadCount();
+
+  // Save to Google Sheets
+  syncToSheets(booking);
+
+  // Extract zip code for ST scheduler
+  var zipMatch = currentBooking.address.match(/\b(\d{5})\b/);
+  var zip = zipMatch ? zipMatch[1] : '';
+
+  // Phone digits only for ST
+  var phoneDigits = currentBooking.phone.replace(/\D/g, '');
+
+  // Launch ServiceTitan Scheduling Pro pre-filled
+  if (typeof _scheduler !== 'undefined') {
+    _scheduler.show({
+      schedulerId: 'sched_tz7v8bdtdhccni2u02lc8tpx',
+      firstName: currentBooking.fname,
+      lastName: currentBooking.lname,
+      email: currentBooking.email,
+      phone: phoneDigits,
+      zipCode: zip,
+      campaign: 'Home-Show'
+    });
+  } else if (typeof ScheduleEngine !== 'undefined') {
+    ScheduleEngine.show({
+      firstName: currentBooking.fname,
+      lastName: currentBooking.lname,
+      email: currentBooking.email,
+      phone: phoneDigits,
+      zipCode: zip,
+      campaign: 'Home-Show'
+    });
+  } else {
+    toast('Scheduler loading... tap again in a moment');
     return;
   }
 
-  const booking = {
-    ...currentBooking,
-    timestamp: new Date().toISOString()
+  // Show thank you
+  document.getElementById('thanksProducts').textContent = currentBooking.products;
+  showScreen('thanks');
+}
+
+// ── Sync to Google Sheets ──
+function syncToSheets(booking) {
+  if (!SHEETS_URL) return;
+
+  var payload = {
+    action: 'book',
+    timestamp: booking.timestamp,
+    date: '',
+    time: '',
+    fname: booking.fname,
+    lname: booking.lname,
+    email: booking.email,
+    phone: booking.phone,
+    address: booking.address,
+    products: booking.products,
+    notes: booking.notes,
+    duration: 'Via ServiceTitan'
   };
 
-  bookings.push(booking);
-  localStorage.setItem('bbb_bookings', JSON.stringify(bookings));
-  updateBookingCount();
-
-  // Thank you screen
-  document.getElementById('thanksDateTime').innerHTML = formatDate(selectedDate) + '<br>' + formatTime(selectedTime);
-  document.getElementById('thanksProducts').textContent = currentBooking.products;
-
-  // Sync to Google Sheets via POST
-  syncBookingToSheets(booking);
-
-  showScreen('thanks');
+  fetch(SHEETS_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain' },
+    body: JSON.stringify(payload),
+    credentials: 'omit'
+  }).catch(function() {
+    console.log('Sheet sync failed - lead saved locally');
+  });
 }
 
 // ── Reset ──
 function resetForm() {
+  showScreen('welcome');
+  selectedProducts.clear();
+  currentBooking = {};
+  document.querySelectorAll('.product-card').forEach(function(c) { c.classList.remove('selected'); });
   document.getElementById('fname').value = '';
   document.getElementById('lname').value = '';
   document.getElementById('email').value = '';
@@ -1484,12 +887,6 @@ function resetForm() {
   document.getElementById('address').value = '';
   document.getElementById('notes').value = '';
   ['fname','lname','email','phone','address'].forEach(clearError);
-  selectedDate = null;
-  selectedTime = null;
-  selectedProducts.clear();
-  document.querySelectorAll('#screen-products .product-card').forEach(c => c.classList.remove('selected'));
-  currentBooking = {};
-  showScreen('welcome');
 }
 
 // ── Admin ──
@@ -1497,338 +894,62 @@ function toggleAdmin() {
   document.getElementById('adminBar').classList.toggle('visible');
 }
 
-function updateBookingCount() {
-  const all = new Set();
-  bookings.forEach(b => all.add(b.date + '|' + b.time));
-  cloudBookings.forEach(b => all.add(b.date + '|' + b.time));
-  document.getElementById('bookingCount').textContent = all.size;
+function updateLeadCount() {
+  document.getElementById('leadCount').textContent = leads.length;
 }
 
 function downloadCSV() {
-  if (bookings.length === 0) { toast('No bookings to export'); return; }
-  const headers = ['Timestamp', 'Date', 'Time', 'First Name', 'Last Name', 'Email', 'Phone', 'Address', 'Products', 'Notes'];
-  const rows = bookings.map(b => [b.timestamp, b.date, formatTime(b.time), b.fname, b.lname, b.email, b.phone, b.address, b.products || '', b.notes || '']);
-  let csv = headers.join(',') + '\n';
-  rows.forEach(row => { csv += row.map(c => '"' + (c || '').replace(/"/g, '""') + '"').join(',') + '\n'; });
-  const blob = new Blob([csv], { type: 'text/csv' });
-  const a = document.createElement('a');
+  if (leads.length === 0) { toast('No leads to export'); return; }
+  var headers = ['Timestamp', 'First Name', 'Last Name', 'Email', 'Phone', 'Address', 'Products', 'Notes'];
+  var rows = leads.map(function(b) { return [b.timestamp, b.fname, b.lname, b.email, b.phone, b.address, b.products || '', b.notes || '']; });
+  var csv = headers.join(',') + '\n';
+  rows.forEach(function(row) { csv += row.map(function(c) { return '"' + (c || '').replace(/"/g, '""') + '"'; }).join(',') + '\n'; });
+  var blob = new Blob([csv], { type: 'text/csv' });
+  var a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
   a.download = 'bumble-bee-bookings-' + new Date().toISOString().slice(0,10) + '.csv';
   a.click();
-  URL.revokeObjectURL(a.href);
   toast('CSV downloaded!');
 }
 
 function confirmClear() {
-  if (confirm('Delete ALL ' + bookings.length + ' bookings? This cannot be undone.')) {
-    bookings = [];
-    localStorage.setItem('bbb_bookings', '[]');
-    updateBookingCount();
-    toast('All bookings cleared');
+  if (confirm('Delete ALL ' + leads.length + ' leads? This cannot be undone.')) {
+    leads = [];
+    localStorage.setItem('bbb_book_leads', '[]');
+    updateLeadCount();
+    toast('All leads cleared');
   }
 }
 
-// ── Block Time ──
-function showBlockModal() {
-  document.getElementById('blockModal').style.display = 'flex';
-  renderBlockedList();
-}
-function closeBlockModal() {
-  document.getElementById('blockModal').style.display = 'none';
+function showLeadsModal() {
+  document.getElementById('leadsModal').style.display = 'flex';
+  renderLeadsList();
 }
 
-function addBlock() {
-  const date = document.getElementById('blockDate').value;
-  const time = document.getElementById('blockTime').value;
-  if (!date) { toast('Select a date to block'); return; }
-
-  const exists = blockedSlots.some(b => b.date === date && b.time === (time || null));
-  if (exists) { toast('Already blocked'); return; }
-
-  blockedSlots.push({ date, time: time || null });
-  localStorage.setItem('bbb_blocked', JSON.stringify(blockedSlots));
-  renderBlockedList();
-  toast('Blocked: ' + formatDateShort(date) + (time ? ' ' + formatTime(time) : ' (all day)'));
+function closeLeadsModal() {
+  document.getElementById('leadsModal').style.display = 'none';
 }
 
-function removeBlock(index) {
-  blockedSlots.splice(index, 1);
-  localStorage.setItem('bbb_blocked', JSON.stringify(blockedSlots));
-  renderBlockedList();
-  toast('Block removed');
-}
-
-function renderBlockedList() {
-  const container = document.getElementById('blockedList');
-  if (blockedSlots.length === 0) {
-    container.innerHTML = '<p style="font-size:13px;color:#7a6e5f;">No blocked dates.</p>';
+function renderLeadsList() {
+  var container = document.getElementById('leadsListContent');
+  if (leads.length === 0) {
+    container.innerHTML = '<p style="text-align:center;color:#7a6e5f;padding:24px;">No leads yet.</p>';
     return;
   }
-  container.innerHTML = '<div style="display:flex;flex-wrap:wrap;gap:6px;">' +
-    blockedSlots.map((b, i) =>
-      '<span class="blocked-tag">' + formatDateShort(b.date) + (b.time ? ' ' + formatTime(b.time) : ' All Day') +
-      ' <span class="remove" onclick="removeBlock(' + i + ')">\u2715</span></span>'
-    ).join('') + '</div>';
-}
-
-// ── Sync to Sheets via POST ──
-function syncBookingToSheets(booking) {
-  if (!SHEETS_URL || SHEETS_URL === 'BOOKING_SHEETS_URL_HERE') return;
-
-  const payload = {
-    action: 'book',
-    timestamp: booking.timestamp,
-    date: booking.date,
-    time: formatTime(booking.time),
-    fname: booking.fname,
-    lname: booking.lname,
-    email: booking.email,
-    phone: booking.phone,
-    address: booking.address,
-    products: booking.products || '',
-    notes: booking.notes || '',
-    duration: '3 hours'
-  };
-
-  fetch(SHEETS_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'text/plain' },
-    body: JSON.stringify(payload)
-  })
-  .then(r => r.json())
-  .then(data => {
-    if (data.status === 'ok') {
-      setTimeout(loadCloudBookings, 1500);
-    } else {
-      throw new Error(data.error || 'Unknown error');
-    }
-  })
-  .catch(() => {
-    // Queue for retry
-    offlineQueue.push(payload);
-    localStorage.setItem('bbb_offline_queue', JSON.stringify(offlineQueue));
-    updateSyncUI(navigator.onLine ? 'error' : 'offline');
-    toast('Booking saved locally — will sync when connected');
-  });
-}
-
-// ── Offline Queue ──
-function retryOfflineQueue() {
-  if (offlineQueue.length === 0 || !SHEETS_URL || SHEETS_URL === 'BOOKING_SHEETS_URL_HERE') return;
-
-  const queue = [...offlineQueue];
-  let succeeded = 0;
-
-  const processNext = (index) => {
-    if (index >= queue.length) {
-      // Remove successful ones
-      offlineQueue = offlineQueue.slice(succeeded);
-      localStorage.setItem('bbb_offline_queue', JSON.stringify(offlineQueue));
-      updateSyncUI(offlineQueue.length === 0 ? 'synced' : 'error');
-      if (succeeded > 0) {
-        toast(succeeded + ' queued booking(s) synced!');
-        setTimeout(loadCloudBookings, 1500);
-      }
-      return;
-    }
-
-    fetch(SHEETS_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify(queue[index])
-    })
-    .then(r => r.json())
-    .then(data => {
-      if (data.status === 'ok') succeeded++;
-      processNext(index + 1);
-    })
-    .catch(() => {
-      // Stop retrying on network failure
-      offlineQueue = offlineQueue.slice(succeeded);
-      localStorage.setItem('bbb_offline_queue', JSON.stringify(offlineQueue));
-      updateSyncUI('offline');
-    });
-  };
-
-  processNext(0);
-}
-
-// ── Bookings List ──
-function showBookingsModal() {
-  document.getElementById('bookingsModal').style.display = 'flex';
-  renderBookingsList();
-}
-function closeBookingsModal() {
-  document.getElementById('bookingsModal').style.display = 'none';
-}
-
-function renderBookingsList() {
-  const container = document.getElementById('bookingsListContent');
-
-  // Merge local + cloud, deduplicate by date+time+name
-  const allBookings = [];
-  const seen = new Set();
-
-  const addBooking = (b, source) => {
-    const key = (b.date || '') + '|' + (b.time || '') + '|' + (b.fname || '') + '|' + (b.lname || '');
-    if (seen.has(key)) return;
-    seen.add(key);
-    allBookings.push({ ...b, source });
-  };
-
-  bookings.forEach(b => addBooking(b, 'local'));
-  cloudBookings.forEach(b => addBooking(b, 'cloud'));
-
-  // Sort by date + time
-  allBookings.sort((a, b) => {
-    const da = (a.date || '') + (a.time || '');
-    const db = (b.date || '') + (b.time || '');
-    return da.localeCompare(db);
-  });
-
-  if (allBookings.length === 0) {
-    container.innerHTML = '<p style="text-align:center;color:#7a6e5f;padding:24px;">No bookings yet.</p>';
-    return;
-  }
-
-  container.innerHTML = allBookings.map(b => {
-    const dateStr = b.date ? formatDate(b.date) : 'Unknown date';
-    const timeStr = b.time ? (b.time.includes('-') ? b.time : formatTime(b.time)) : '';
-    const name = [b.fname, b.lname].filter(Boolean).join(' ') || 'Unknown';
-    const details = [b.phone, b.email, b.products].filter(Boolean).join(' &bull; ');
-    const sourceTag = b.source === 'local' ? ' <span style="color:var(--buttercup);font-size:11px;">(this iPad)</span>' : '';
-
-    return '<div class="booking-list-item">' +
-      '<div class="bl-date">' + dateStr + ' &mdash; ' + timeStr + '</div>' +
-      '<div class="bl-name">' + name + sourceTag + '</div>' +
-      (details ? '<div class="bl-detail">' + details + '</div>' : '') +
-      (b.notes ? '<div class="bl-detail" style="font-style:italic;">Notes: ' + b.notes + '</div>' : '') +
+  container.innerHTML = leads.slice().reverse().map(function(b) {
+    var name = [b.fname, b.lname].filter(Boolean).join(' ') || 'Unknown';
+    var details = [b.phone, b.email, b.products].filter(Boolean).join(' &bull; ');
+    return '<div style="padding:12px 0;border-bottom:1px solid #f0ebe3;font-size:14px;">' +
+      '<div style="font-weight:700;">' + name + '</div>' +
+      '<div style="color:#7a6e5f;font-size:13px;margin-top:2px;">' + details + '</div>' +
+      (b.notes ? '<div style="color:#7a6e5f;font-size:13px;font-style:italic;margin-top:2px;">Notes: ' + b.notes + '</div>' : '') +
     '</div>';
   }).join('');
 }
 
-// ── Apps Script Setup ──
-const APPS_SCRIPT = `// Bumble Bee Blinds — Booking Sheet Apps Script
-// Handles: write bookings (POST), read bookings (GET ?action=list), send confirmation emails
-
-function doPost(e) {
-  try {
-    var data = JSON.parse(e.postData.contents);
-    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-
-    sheet.appendRow([
-      data.timestamp || new Date().toISOString(),
-      data.date || '',
-      data.time || '',
-      data.fname || '',
-      data.lname || '',
-      data.email || '',
-      data.phone || '',
-      data.address || '',
-      data.products || '',
-      data.notes || '',
-      data.duration || '3 hours'
-    ]);
-
-    // Send confirmation email
-    if (data.email) {
-      try {
-        var subject = 'Bumble Bee Blinds — Consultation Confirmed!';
-        var body = 'Hi ' + (data.fname || 'there') + ',\\n\\n' +
-          'Your free in-home consultation is booked!\\n\\n' +
-          'Date: ' + (data.date || 'TBD') + '\\n' +
-          'Time: ' + (data.time || 'TBD') + '\\n' +
-          'Duration: 3 hours\\n' +
-          'Address: ' + (data.address || '') + '\\n' +
-          (data.products ? 'Interested in: ' + data.products + '\\n' : '') +
-          '\\nA Bumble Bee Blinds design consultant will visit your home to help you find the perfect window treatments.\\n\\n' +
-          'If you need to reschedule, please call us at (813) 535-3028.\\n\\n' +
-          'Thank you!\\nBumble Bee Blinds — Tampa Bay\\n' +
-          'https://bumblebeeblinds.com/tampa-bay';
-        MailApp.sendEmail(data.email, subject, body);
-      } catch(emailErr) {
-        // Email failure shouldn't block the booking
-      }
-    }
-
-    return ContentService.createTextOutput(JSON.stringify({ status: 'ok' }))
-      .setMimeType(ContentService.MimeType.JSON);
-
-  } catch(err) {
-    return ContentService.createTextOutput(JSON.stringify({ status: 'error', error: err.toString() }))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
-}
-
-function doGet(e) {
-  try {
-    var action = (e.parameter.action || '').toLowerCase();
-
-    if (action === 'list') {
-      var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-      var data = sheet.getDataRange().getValues();
-      if (data.length <= 1) {
-        return ContentService.createTextOutput('[]').setMimeType(ContentService.MimeType.JSON);
-      }
-
-      var headers = data[0].map(function(h) { return h.toString().toLowerCase().replace(/\\s+/g, '_'); });
-      var rows = [];
-
-      for (var i = 1; i < data.length; i++) {
-        var row = {};
-        for (var j = 0; j < headers.length; j++) {
-          var key = headers[j];
-          var val = data[i][j];
-          // Map column names to what the app expects
-          if (key === 'first_name') key = 'fname';
-          if (key === 'last_name') key = 'lname';
-          if (key === 'date' && val instanceof Date) {
-            val = Utilities.formatDate(val, Session.getScriptTimeZone(), 'yyyy-MM-dd');
-          }
-          if (key === 'timestamp' && val instanceof Date) {
-            val = val.toISOString();
-          }
-          if (key === 'time' && val instanceof Date) {
-            val = Utilities.formatDate(val, Session.getScriptTimeZone(), 'HH:mm');
-          }
-          row[key] = val ? val.toString() : '';
-        }
-        rows.push(row);
-      }
-
-      return ContentService.createTextOutput(JSON.stringify(rows))
-        .setMimeType(ContentService.MimeType.JSON);
-    }
-
-    // Unknown action
-    return ContentService.createTextOutput(JSON.stringify({ status: 'error', error: 'Unknown action' }))
-      .setMimeType(ContentService.MimeType.JSON);
-
-  } catch(err) {
-    return ContentService.createTextOutput(JSON.stringify({ status: 'error', error: err.toString() }))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
-}`;
-
-function showScriptModal() {
-  document.getElementById('scriptContent').value = APPS_SCRIPT;
-  document.getElementById('scriptModal').style.display = 'flex';
-}
-function closeScriptModal() {
-  document.getElementById('scriptModal').style.display = 'none';
-}
-function copyScript() {
-  navigator.clipboard.writeText(APPS_SCRIPT).then(() => {
-    toast('Apps Script copied to clipboard!');
-  }).catch(() => {
-    document.getElementById('scriptContent').select();
-    toast('Select all and copy manually');
-  });
-}
-
 // ── Phone Formatting ──
 document.getElementById('phone').addEventListener('input', function(e) {
-  let val = e.target.value.replace(/\D/g, '');
+  var val = e.target.value.replace(/\D/g, '');
   if (val.length > 0) {
     if (val.length <= 3) val = '(' + val;
     else if (val.length <= 6) val = '(' + val.slice(0,3) + ') ' + val.slice(3);
@@ -1839,20 +960,16 @@ document.getElementById('phone').addEventListener('input', function(e) {
 
 // ── Address Helper ──
 document.getElementById('address').addEventListener('input', function(e) {
-  const val = e.target.value.trim();
-  const hint = document.getElementById('addressHint');
+  var val = e.target.value.trim();
+  var hint = document.getElementById('addressHint');
 
-  if (!val) {
-    hint.style.display = 'none';
-    return;
-  }
+  if (!val) { hint.style.display = 'none'; return; }
 
-  const hasStreet = /\d+\s+\w/.test(val);
-  const hasComma = val.includes(',');
-  const hasState = /\b(FL|Florida)\b/i.test(val);
-  const hasZip = /\b\d{5}\b/.test(val);
-
-  const missing = [];
+  var hasStreet = /\d+\s+\w/.test(val);
+  var hasComma = val.includes(',');
+  var hasState = /\b(FL|Florida)\b/i.test(val);
+  var hasZip = /\b\d{5}\b/.test(val);
+  var missing = [];
   if (!hasStreet) missing.push('street number');
   if (!hasComma) missing.push('city');
   if (!hasState) missing.push('state');
@@ -1865,36 +982,30 @@ document.getElementById('address').addEventListener('input', function(e) {
     hint.textContent = '\u2713 Looks good!';
     hint.style.display = 'block';
     hint.style.color = 'var(--success)';
-    setTimeout(() => { hint.style.color = 'var(--buttercup)'; }, 1500);
+    setTimeout(function() { hint.style.color = 'var(--buttercup)'; }, 1500);
   } else {
     hint.style.display = 'none';
   }
 });
 
-// ── Address Comma Helper: auto-add comma after city pattern ──
 document.getElementById('address').addEventListener('blur', function(e) {
-  let val = e.target.value.trim();
+  var val = e.target.value.trim();
   if (!val) return;
-
-  // Auto-capitalize state abbreviation if they wrote "fl" or "florida"
   val = val.replace(/\b(fl)\b/gi, 'FL');
   val = val.replace(/\bflorida\b/gi, 'FL');
-
-  // If they have a pattern like "123 Main St Tampa" without comma, suggest it
-  // But don't force it — just normalize FL
   e.target.value = val;
 });
 
 // ── Toast ──
 function toast(msg) {
-  const t = document.getElementById('toast');
+  var t = document.getElementById('toast');
   t.textContent = msg;
   t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2500);
+  setTimeout(function() { t.classList.remove('show'); }, 2500);
 }
 
 // ── Prevent zoom ──
-document.addEventListener('dblclick', e => e.preventDefault());
+document.addEventListener('dblclick', function(e) { e.preventDefault(); });
 </script>
 
 </body>
